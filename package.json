@@ -1,0 +1,24 @@
+{
+  "name": "mqtt-speak",
+  "version": "0.0.1",
+  "description": "Message queue for processing TTS",
+  "author": "DSTIL",
+  "license": "MIT",
+  "repository": {
+  },
+  "bugs": {
+  },
+  "bin": "./index.js",
+  "dependencies": {
+    "mqtt": "1.8.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">= 4"
+  },
+  "keywords": [
+    "service",
+    "tts",
+    "queue",
+  ]
+}
