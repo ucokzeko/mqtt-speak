@@ -3,7 +3,7 @@ var crypto = require('crypto');
 var request = require('request');
 var fs = require('fs');
 var includes = require('array-includes');
-
+var player = require('play-sound')(opts = {});
 
 var client = mqtt.connect('mqtt://localhost');
 var audioPath = 'audio'; // Audio path needs to be adjusted to the environment
@@ -21,7 +21,8 @@ client.on('message', function (topic, message) {
   	console.log(message.toString() + ": " + md5String);
   	if (isAudioExist(md5String)) {
   		// TODO: Action when audio file is found
-  		console.log('Audio found.')
+  		console.log('Audio found.');
+  		playAudio(md5String);
   	} else {
   		// Request TTS service to generate audio file and save it
   		console.log('Generating audio file');
@@ -35,6 +36,7 @@ client.on('message', function (topic, message) {
 							console.error('Failed saving audio file!', e);
 			  			} else {
 			  				console.log('Audio file saved.');
+  							playAudio(md5String);
 			  			}
 			  		});
 				});
@@ -44,6 +46,12 @@ client.on('message', function (topic, message) {
 		});
   	}
 });
+
+function playAudio(md5String) {
+	player.play(audioPath + "/" + md5String + '.mp3', function(err){
+		console.log('Audio played.');
+	});
+}
 
 function getTTSRequestUrl(reqText) {
 	var baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
