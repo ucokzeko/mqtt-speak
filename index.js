@@ -1,12 +1,13 @@
 var mqtt = require('mqtt');
 var crypto = require('crypto');
-var request = require('request');
 var fs = require('fs');
 var includes = require('array-includes');
 var player = require('play-sound')(opts = {});
+var Processor = require('./module/audio-processor.js');
 
 var client = mqtt.connect('mqtt://localhost');
-var audioPath = 'audio'; // Audio path needs to be adjusted to the environment
+var audioPath = './audio/'; // Audio path needs to be adjusted to the environment
+var processor = new Processor();
 
 client.on('connect', function () {
   	client.subscribe('say/#');
@@ -25,37 +26,22 @@ client.on('message', function (topic, message) {
   		playAudio(md5String);
   	} else {
   		// Request TTS service to generate audio file and save it
-  		console.log('Generating audio file');
-  		request(getTTSRequestUrl(message.toString()), function (error, response, body) {
-		    if (!error && response.statusCode == 200) {
-		    	var audioUrl = JSON.parse(body).snd_url.replace('\\','');
-		        console.log('Audio url: ' + audioUrl); // Show download link.
-		        request(audioUrl, {encoding: 'binary'}, function(error, response, body) {
-			  		fs.writeFile('audio/' + md5String + '.mp3', body, 'binary', function(err) {
-			  			if (err) {
-							console.error('Failed saving audio file!', e);
-			  			} else {
-			  				console.log('Audio file saved.');
-  							playAudio(md5String);
-			  			}
-			  		});
-				});
-		    } else {
-		    	console.error("Error requesting audio file!", e);
-		    }
-		});
+  		console.log('Generating audio file.');
+  		processor.createAudioFile(message.toString(), audioPath, md5String + ".mp3", function(err, data) {
+  			if (err) {
+  				console.error('Creating audio file failed.', err);
+  			} else {
+  				playAudio(md5String);
+  			}
+  		});
   	}
+	console.log('--- Done processing request ---');
 });
 
 function playAudio(md5String) {
 	player.play(audioPath + "/" + md5String + '.mp3', function(err){
 		console.log('Audio played.');
 	});
-}
-
-function getTTSRequestUrl(reqText) {
-	var baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
-	return baseUrl + '?req_voice=lisa22k&req_text="' + reqText + '"&prot_vers=2&cl_login=EVAL_VAAS&cl_app=EVAL_3608771&cl_pwd=du40md9t&req_asw_type=SOUND'
 }
 
 function isAudioExist(md5String) {
