@@ -9,7 +9,9 @@ client.on('connect', function () {
  
 client.on('message', function (topic, message) {
   // message is Buffer 
-  var md5 = crypto.createHash('md5').update(message.toString()).digest("hex");
-  console.log(message.toString() + ": " + md5);
+	var md5String = getMD5(message.toString());
+  	console.log(message.toString() + ": " + md5String);
 
-});
+});function getMD5(text) {
+	return crypto.createHash('md5').update(text).digest("hex");
+}
