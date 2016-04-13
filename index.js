@@ -4,16 +4,16 @@ var fs = require('fs');
 var includes = require('array-includes');
 var player = require('play-sound')(opts = {});
 var Processor = require('./module/audio-processor.js');
+var config = require('config.json')('./config.json');
 
 var client = mqtt.connect('mqtt://localhost');
-var audioPath = './audio/'; // Audio path needs to be adjusted to the environment
 var processor = new Processor();
 
 client.on('connect', function () {
   	client.subscribe('say/#');
-
-	if (!fs.existsSync(audioPath)){
-	    fs.mkdirSync(audioPath);
+  	
+	if (!fs.existsSync(config.audio.path)){
+	    fs.mkdirSync(config.audio.path);
 	}
 });
  
@@ -27,7 +27,7 @@ client.on('message', function (topic, message) {
   	} else {
   		// Request TTS service to generate audio file and save it
   		console.log('Generating audio file.');
-  		processor.createAudioFile(message.toString(), audioPath, md5String + ".mp3", function(err, data) {
+  		processor.createAudioFile(message.toString(), config.audio.path, md5String + ".mp3", function(err, data) {
   			if (err) {
   				console.error('Creating audio file failed.', err);
   			} else {
@@ -39,13 +39,13 @@ client.on('message', function (topic, message) {
 });
 
 function playAudio(md5String) {
-	player.play(audioPath + "/" + md5String + '.mp3', function(err){
+	player.play(config.audio.path + "/" + md5String + '.mp3', function(err){
 		console.log('Audio played.');
 	});
 }
 
 function isAudioExist(md5String) {
-	var files = fs.readdirSync(audioPath);
+	var files = fs.readdirSync(config.audio.path);
 	return includes(files, md5String + '.mp3');
 }
 
