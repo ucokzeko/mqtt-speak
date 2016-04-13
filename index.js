@@ -10,7 +10,7 @@ var client = mqtt.connect('mqtt://localhost');
 var processor = new Processor();
 
 client.on('connect', function () {
-  	client.subscribe('say/#');
+  	client.subscribe(config.channel.sub);
   	
 	if (!fs.existsSync(config.audio.path)){
 	    fs.mkdirSync(config.audio.path);
