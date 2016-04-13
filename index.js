@@ -29,7 +29,7 @@ client.on('message', function (topic, message) {
   		console.log('Generating audio file.');
   		processor.createAudioFile(message.toString(), config.audio.path, md5String + ".mp3", function(err, data) {
   			if (err) {
-  				console.error('Creating audio file failed.', err);
+  				console.error('Creating audio file failed.\n', err);
   			} else {
   				playAudio(md5String);
   			}
