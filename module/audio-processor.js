@@ -1,9 +1,11 @@
-var fs = require('fs');
-var crypto = require('crypto');
-var request = require('request');
+"use strict";
+
+const fs = require('fs');
+const crypto = require('crypto');
+const request = require('request');
 
 var Proc = function(msgString, root, callback) {
-	var path = root + getMD5String(msgString) + '.mp3';
+	const path = root + getMD5String(msgString) + '.mp3';
 
 	console.log('MD5 String: ' + getMD5String(msgString));
 	console.log('Audio path: ' + path);
@@ -34,7 +36,7 @@ function getMD5String(text) {
 }
 
 function getTTSRequestUrl(reqText) {
-	var baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
+	const baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
 	return baseUrl + '?req_voice=lisa22k&req_text="' + reqText + '"&prot_vers=2&cl_login=EVAL_VAAS&cl_app=EVAL_3608771&cl_pwd=du40md9t&req_asw_type=SOUND'
 }
 
