@@ -9,7 +9,9 @@ var client = mqtt.connect('mqtt://localhost');
 client.on('connect', function () {
   	client.subscribe(config.channel.sub);
   	
-	if (!fs.existsSync(config.audio.path)){
+  	try {
+		fs.lstatSync(config.audio.path);
+  	} catch (e) {
 	    fs.mkdirSync(config.audio.path);
 	}
 });
