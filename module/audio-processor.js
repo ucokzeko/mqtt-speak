@@ -57,7 +57,7 @@ function getTTSRequestUrl(reqText) {
 		cl_app: 'EVAL_3608771',
 		cl_pwd: 'du40md9t',
 		req_asw_type: 'SOUND'
-	}
+	};
 	uri.query(URI.buildQuery(data));
 	return uri.toString();
 }
