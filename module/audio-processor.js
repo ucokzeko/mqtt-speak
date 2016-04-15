@@ -34,7 +34,7 @@ var Proc = function(msgString, root, callback) {
           return callback(new Error('Response is unexpected: ' + response.statusCode), null);
         }
       }
-    })
+    });
   }
 };
 
@@ -44,7 +44,7 @@ function getMD5String(text) {
 
 function getTTSRequestUrl(reqText) {
   const baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
-  return baseUrl + '?req_voice=lisa22k&req_text="' + reqText + '"&prot_vers=2&cl_login=EVAL_VAAS&cl_app=EVAL_3608771&cl_pwd=du40md9t&req_asw_type=SOUND'
+  return baseUrl + '?req_voice=lisa22k&req_text="' + reqText + '"&prot_vers=2&cl_login=EVAL_VAAS&cl_app=EVAL_3608771&cl_pwd=du40md9t&req_asw_type=SOUND';
 }
 
 function downloadAudioFile(url, path, callback) {
