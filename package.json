@@ -4,10 +4,8 @@
   "description": "Message queue for processing TTS",
   "author": "DSTIL",
   "license": "MIT",
-  "repository": {
-  },
-  "bugs": {
-  },
+  "repository": {},
+  "bugs": {},
   "bin": "./index.js",
   "dependencies": {
     "mqtt": "1.8.0",
