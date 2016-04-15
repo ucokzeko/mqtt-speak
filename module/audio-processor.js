@@ -53,8 +53,8 @@ function downloadAudioFile(url, path, callback) {
         if (err) {
           return callback(err, null);
         }
-      console.log('Audio file saved.');
-      callback(null, path);
+        console.log('Audio file saved.');
+        callback(null, path);
       });
   });
 }
