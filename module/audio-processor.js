@@ -5,38 +5,38 @@ const crypto = require('crypto');
 const request = require('request');
 const URI = require('urijs');
 
-var Proc = function(msgString, root, callback) {
+var Proc = function(msgString, root) {
   const path = root + getMD5String(msgString) + '.mp3';
 
   console.log('MD5 String: ' + getMD5String(msgString));
   console.log('Audio path: ' + path);
 
-  try {
-    fs.lstatSync(path);
-    console.log('Audio found');
-    callback(null, path);
-  } catch (e) {
-    // Request TTS service to get download url
-    request(getTTSRequestUrl(msgString), function (error, response, body) {
-      if (error) {
-        return callback(error, null);
-      } else {
-        if (response.statusCode === 200) {
-          // Unescape url
-          const audioUrl = JSON.parse(body).snd_url.replace('\\','');
-          console.log('Audio url: ' + audioUrl); // Show download link.
-          downloadAudioFile(audioUrl, path, function(err, data) {
-            if (err) {
-              return callback(err, null);
-            }
-            callback(null, data);
-          });
+  return new Promise(function (fulfill, reject) {
+    try {
+      fs.lstatSync(path);
+      console.log('Audio found');
+      fulfill(path);
+    } catch (e) {
+      // Request TTS service to get download url
+      request(getTTSRequestUrl(msgString), function (error, response, body) {
+        if (error) {
+          reject(error);
         } else {
-          return callback(new Error('Response is unexpected: ' + response.statusCode), null);
+          if (response.statusCode === 200) {
+            // Unescape url
+            const audioUrl = JSON.parse(body).snd_url.replace('\\','');
+            console.log('Audio url: ' + audioUrl); // Show download link.
+            downloadAudioFile(audioUrl, path)
+            .then(function (path) {
+              fulfill(path);
+            }, reject);
+          } else {
+            reject(new Error('Response is unexpected: ' + response.statusCode));
+          }
         }
-      }
-    });
-  }
+      });
+    }
+  });
 };
 
 function getMD5String(text) {
@@ -62,15 +62,25 @@ function getTTSRequestUrl(reqText) {
   return uri.toString();
 }
 
-function downloadAudioFile(url, path, callback) {
-  request(url, {encoding: 'binary'}, function(error, response, body) {
-      fs.writeFile(path, body, 'binary', function(err) {
-        if (err) {
-          return callback(err, null);
+function downloadAudioFile(url, path) {
+  return new Promise(function (fulfill, reject) {
+    request(url, {encoding: 'binary'}, function(error, response, body) {
+      if (error) {
+        reject(error);
+      } else {
+        if (response.statusCode === 200) {
+          fs.writeFile(path, body, 'binary', function(err) {
+            if (err) {
+              reject(err);
+            }
+            console.log('Audio file saved');
+            fulfill(path);
+          });
+        } else {
+          reject (error);
         }
-        console.log('Audio file saved.');
-        callback(null, path);
-      });
+      }
+    });
   });
 }
 
