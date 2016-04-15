@@ -20,13 +20,11 @@ client.on('connect', function () {
 client.on('message', function (topic, message) {
   console.log('-- Message received ---');
   console.log('Message: ' + message.toString());
-  new Processor(message.toString(), config.audio.path, function (error, path) {
-    if (error) { 
-      console.error("Failed getting audio file.\n", error);
-    }
-    else {
-      client.publish(config.channel.pub, path);
-      console.log('Put audio path to playing queue');
-    }
+  new Processor(message.toString(), config.audio.path)
+  .then(function (path) {
+    client.publish(config.channel.pub, path);
+    console.log('Put audio path to playing queue');
+  }, function(error) {
+    console.error("Failed getting audio file.\n", error);
   });
 });
