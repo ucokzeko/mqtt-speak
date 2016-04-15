@@ -1,8 +1,8 @@
 {
-	"audio": {
-		"path": "./audio/"
-	}, "channel" : {
-		"sub": "say/#",
-		"pub": "play/audio"
-	}
+  "audio": {
+    "path": "./audio/"
+  }, "channel" : {
+    "sub": "say/#",
+    "pub": "play/audio"
+  }
 }
