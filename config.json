@@ -1,0 +1,8 @@
+{
+  "audio": {
+    "path": "./audio/"
+  }, "channel" : {
+    "sub": "say/#",
+    "pub": "play/audio"
+  }
+}
