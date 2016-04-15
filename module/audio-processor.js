@@ -3,6 +3,7 @@
 const fs = require('fs');
 const crypto = require('crypto');
 const request = require('request');
+const URI = require('urijs');
 
 var Proc = function(msgString, root, callback) {
   const path = root + getMD5String(msgString) + '.mp3';
@@ -43,8 +44,22 @@ function getMD5String(text) {
 }
 
 function getTTSRequestUrl(reqText) {
-  const baseUrl = 'http://vaas.acapela-group.com/Services/UrlMaker.json';
-  return baseUrl + '?req_voice=lisa22k&req_text="' + reqText + '"&prot_vers=2&cl_login=EVAL_VAAS&cl_app=EVAL_3608771&cl_pwd=du40md9t&req_asw_type=SOUND';
+	let uri = URI({
+		protocol: 'http',
+		hostname: 'vaas.acapela-group.com',
+		path: 'Services/UrlMaker.json',
+	});
+	const data = {
+		req_voice: 'lisa22k',
+		req_text: reqText,
+		prot_vers: '2',
+		cl_login: 'EVAL_VAAS',
+		cl_app: 'EVAL_3608771',
+		cl_pwd: 'du40md9t',
+		req_asw_type: 'SOUND'
+	}
+	uri.query(URI.buildQuery(data));
+	return uri.toString();
 }
 
 function downloadAudioFile(url, path, callback) {
