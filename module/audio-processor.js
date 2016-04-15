@@ -44,22 +44,22 @@ function getMD5String(text) {
 }
 
 function getTTSRequestUrl(reqText) {
-	let uri = URI({
-		protocol: 'http',
-		hostname: 'vaas.acapela-group.com',
-		path: 'Services/UrlMaker.json',
-	});
-	const data = {
-		req_voice: 'lisa22k',
-		req_text: reqText,
-		prot_vers: '2',
-		cl_login: 'EVAL_VAAS',
-		cl_app: 'EVAL_3608771',
-		cl_pwd: 'du40md9t',
-		req_asw_type: 'SOUND'
-	};
-	uri.query(URI.buildQuery(data));
-	return uri.toString();
+  let uri = URI({
+    protocol: 'http',
+    hostname: 'vaas.acapela-group.com',
+    path: 'Services/UrlMaker.json',
+  });
+  const data = {
+    req_voice: 'lisa22k',
+    req_text: reqText,
+    prot_vers: '2',
+    cl_login: 'EVAL_VAAS',
+    cl_app: 'EVAL_3608771',
+    cl_pwd: 'du40md9t',
+    req_asw_type: 'SOUND'
+  };
+  uri.query(URI.buildQuery(data));
+  return uri.toString();
 }
 
 function downloadAudioFile(url, path, callback) {
