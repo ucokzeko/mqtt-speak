@@ -4,8 +4,7 @@ const fs = require('fs');
 const mqtt = require('mqtt');
 const config = require('config.json')('./config.json');
 const Processor = require('./module/audio-processor.js');
-
-let client = mqtt.connect('mqtt://localhost');
+const client = mqtt.connect('mqtt://localhost');
 
 client.on('connect', function () {
   client.subscribe(config.channel.sub);
