@@ -5,6 +5,6 @@
     "sub": "say/#",
     "pub": "play/audio"
   }, "acapela": {
-  	"voice": "lisa22k"
+    "voice": "lisa22k"
   }
 }
