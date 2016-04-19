@@ -4,5 +4,7 @@
   }, "channel" : {
     "sub": "say/#",
     "pub": "play/audio"
+  }, "acapela": {
+  	"voice": "lisa22k"
   }
 }

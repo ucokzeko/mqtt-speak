@@ -4,6 +4,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const request = require('request');
 const URI = require('urijs');
+const config = require('config.json')('./config.json');
 
 var Proc = function(msgString, root) {
   const path = root + getMD5String(msgString) + '.mp3';
@@ -50,12 +51,12 @@ function getTTSRequestUrl(reqText) {
     path: 'Services/UrlMaker.json',
   });
   const data = {
-    req_voice: 'lisa22k',
+    req_voice: config.acapela.voice,
     req_text: reqText,
     prot_vers: '2',
-    cl_login: 'EVAL_VAAS',
-    cl_app: 'EVAL_3608771',
-    cl_pwd: 'du40md9t',
+    cl_login: process.env.ACAPELA_TTS_LOGIN,
+    cl_app: process.env.ACAPELA_TTS_APP,
+    cl_pwd: process.env.ACAPELA_TTS_PWD,
     req_asw_type: 'SOUND'
   };
   uri.query(URI.buildQuery(data));
