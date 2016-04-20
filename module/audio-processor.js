@@ -4,7 +4,7 @@ const request = require('request');
 const uri = require('urijs');
 const config = require('config.json')('./config.json');
 
-const Proc = (msgString, root) => {
+function Proc(msgString, root) {
   const path = `${root}${getMD5String(msgString)}.mp3`;
   return new Promise((fulfill, reject) => {
     try {
@@ -30,7 +30,7 @@ const Proc = (msgString, root) => {
       });
     }
   });
-};
+}
 
 function getMD5String(text) {
   return crypto.createHash('md5').update(text).digest('hex');
