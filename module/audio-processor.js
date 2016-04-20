@@ -1,5 +1,3 @@
-"use strict";
-
 const fs = require('fs');
 const crypto = require('crypto');
 const request = require('request');
@@ -41,14 +39,14 @@ var Proc = function(msgString, root) {
 };
 
 function getMD5String(text) {
-  return crypto.createHash('md5').update(text).digest("hex");
+  return crypto.createHash('md5').update(text).digest('hex');
 }
 
 function getTTSRequestUrl(reqText) {
   let uri = URI({
     protocol: 'http',
     hostname: 'vaas.acapela-group.com',
-    path: 'Services/UrlMaker.json',
+    path: 'Services/UrlMaker.json'
   });
   const data = {
     req_voice: config.acapela.voice,

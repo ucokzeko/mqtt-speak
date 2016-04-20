@@ -1,5 +1,3 @@
-"use strict";
-
 const fs = require('fs');
 const mqtt = require('mqtt');
 const config = require('config.json')('./config.json');
@@ -24,6 +22,6 @@ client.on('message', function (topic, message) {
     client.publish(config.channel.pub, path);
     console.log('Put audio path to playing queue');
   }, function(error) {
-    console.error("Failed getting audio file.\n", error);
+    console.error('Failed getting audio file.\n', error);
   });
 });
