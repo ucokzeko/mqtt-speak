@@ -14,10 +14,12 @@ client.on('connect', () => {
 });
 
 client.on('message', (topic, message) => {
+  console.log(`Message received: ${message.toString()}`);
   new Processor(message.toString(), config.audio.path)
   .then((path) => {
     client.publish(config.channel.pub, path);
+    console.log(`Audio path published with data: ${path}`);
   }, (error) => {
-    throw error;
+    console.error(error);
   });
 });
