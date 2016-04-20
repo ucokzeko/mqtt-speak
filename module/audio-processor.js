@@ -51,8 +51,8 @@ function getTTSRequestUrl(reqText) {
     cl_pwd:       process.env.ACAPELA_TTS_PWD,
     req_asw_type: 'SOUND'
   };
-  uri.query(url.buildQuery(data));
-  return uri.toString();
+  url.query(uri.buildQuery(data));
+  return url.toString();
 }
 
 function downloadAudioFile(url, path) {
@@ -66,6 +66,7 @@ function downloadAudioFile(url, path) {
             if (err) {
               reject(err);
             }
+            console.log(`Audio file saved to ${path}`);
             fulfill(path);
           });
         } else {
