@@ -2,7 +2,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const request = require('request');
 const URI = require('urijs');
-const config = require('config.json')('./config.json');
+const config = require('config.json')(`${__dirname}/../config.json`);
 
 var Proc = function(msgString, root) {
   const path = root + getMD5String(msgString) + '.mp3';

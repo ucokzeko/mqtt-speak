@@ -1,6 +1,6 @@
 const fs = require('fs');
 const mqtt = require('mqtt');
-const config = require('config.json')('./config.json');
+const config = require('config.json')(`${__dirname}/config.json`);
 const Processor = require('./module/audio-processor.js');
 const client = mqtt.connect('mqtt://localhost');
 
