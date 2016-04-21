@@ -22,6 +22,6 @@ client.on('message', (topic, message) => {
     client.publish(config.channel.pub, path);
     winston.info(`Audio path published with data: ${path}`);
   }, (error) => {
-    winston.info(error);
+    winston.error(error);
   });
 });
