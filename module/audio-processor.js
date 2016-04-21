@@ -1,84 +1,77 @@
-"use strict";
-
 const fs = require('fs');
 const crypto = require('crypto');
 const request = require('request');
-const URI = require('urijs');
+const uri = require('urijs');
 const config = require('config.json')('./config.json');
+const winston = require('winston');
 
-var Proc = function(msgString, root) {
-  const path = root + getMD5String(msgString) + '.mp3';
-
-  console.log('MD5 String: ' + getMD5String(msgString));
-  console.log('Audio path: ' + path);
-
-  return new Promise(function (fulfill, reject) {
+function Proc(msgString, root) {
+  const path = `${root}${getMD5String(msgString)}.mp3`;
+  return new Promise((fulfill, reject) => {
     try {
       fs.lstatSync(path);
-      console.log('Audio found');
       fulfill(path);
     } catch (e) {
       // Request TTS service to get download url
-      request(getTTSRequestUrl(msgString), function (error, response, body) {
+      request(getTTSRequestUrl(msgString), (error, response, body) => {
         if (error) {
           reject(error);
         } else {
           if (response.statusCode === 200) {
             // Unescape url
-            const audioUrl = JSON.parse(body).snd_url.replace('\\','');
-            console.log('Audio url: ' + audioUrl); // Show download link.
+            const audioUrl = JSON.parse(body).snd_url.replace('\\', '');
             downloadAudioFile(audioUrl, path)
-            .then(function (path) {
-              fulfill(path);
+            .then((filePath) => {
+              fulfill(filePath);
             }, reject);
           } else {
-            reject(new Error('Response is unexpected: ' + response.statusCode));
+            reject(new Error(`Response is unexpected: ${response.statusCode}`));
           }
         }
       });
     }
   });
-};
+}
 
 function getMD5String(text) {
-  return crypto.createHash('md5').update(text).digest("hex");
+  return crypto.createHash('md5').update(text).digest('hex');
 }
 
 function getTTSRequestUrl(reqText) {
-  let uri = URI({
+  const url = uri({
     protocol: 'http',
     hostname: 'vaas.acapela-group.com',
-    path: 'Services/UrlMaker.json',
+    path:     'Services/UrlMaker.json'
   });
   const data = {
-    req_voice: config.acapela.voice,
-    req_text: reqText,
-    prot_vers: '2',
-    cl_login: process.env.ACAPELA_TTS_LOGIN,
-    cl_app: process.env.ACAPELA_TTS_APP,
-    cl_pwd: process.env.ACAPELA_TTS_PWD,
+    req_voice:    config.acapela.voice,
+    req_text:     reqText,
+    prot_vers:    '2',
+    cl_login:     process.env.ACAPELA_TTS_LOGIN,
+    cl_app:       process.env.ACAPELA_TTS_APP,
+    cl_pwd:       process.env.ACAPELA_TTS_PWD,
     req_asw_type: 'SOUND'
   };
-  uri.query(URI.buildQuery(data));
-  return uri.toString();
+  url.query(uri.buildQuery(data));
+  return url.toString();
 }
 
 function downloadAudioFile(url, path) {
-  return new Promise(function (fulfill, reject) {
-    request(url, {encoding: 'binary'}, function(error, response, body) {
+  return new Promise((fulfill, reject) => {
+    request(url, { encoding: 'binary' }, (error, response, body) => {
       if (error) {
         reject(error);
       } else {
         if (response.statusCode === 200) {
-          fs.writeFile(path, body, 'binary', function(err) {
+          fs.writeFile(path, body, 'binary', (err) => {
             if (err) {
               reject(err);
             }
-            console.log('Audio file saved');
+            winston.info(`Audio file saved to ${path}`);
             fulfill(path);
           });
         } else {
-          reject (error);
+          reject(error);
         }
       }
     });
