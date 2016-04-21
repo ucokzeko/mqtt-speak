@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const request = require('request');
 const uri = require('urijs');
 const config = require('config.json')('./config.json');
+const winston = require('winston');
 
 function Proc(msgString, root) {
   const path = `${root}${getMD5String(msgString)}.mp3`;
@@ -66,7 +67,7 @@ function downloadAudioFile(url, path) {
             if (err) {
               reject(err);
             }
-            console.log(`Audio file saved to ${path}`);
+            winston.info(`Audio file saved to ${path}`);
             fulfill(path);
           });
         } else {

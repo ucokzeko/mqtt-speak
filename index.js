@@ -3,6 +3,8 @@ const mqtt = require('mqtt');
 const config = require('config.json')('./config.json');
 const Processor = require('./module/audio-processor.js');
 const client = mqtt.connect('mqtt://localhost');
+const winston = require('winston');
+
 
 client.on('connect', () => {
   client.subscribe(config.channel.sub);
@@ -14,12 +16,12 @@ client.on('connect', () => {
 });
 
 client.on('message', (topic, message) => {
-  console.log(`Message received: ${message.toString()}`);
+  winston.info(`Message received: ${message.toString()}`);
   new Processor(message.toString(), config.audio.path)
   .then((path) => {
     client.publish(config.channel.pub, path);
-    console.log(`Audio path published with data: ${path}`);
+    winston.info(`Audio path published with data: ${path}`);
   }, (error) => {
-    console.error(error);
+    winston.info(error);
   });
 });
