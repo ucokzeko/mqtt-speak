@@ -1,8 +1,10 @@
+const fs = require('fs');
 const request = require('request');
 const uri = require('urijs');
 const config = require('config.json')(`${__dirname}/../config.json`);
+const winston = require('winston');
 
-function Acapela(audioText) {
+function Acapela(audioText, path) {
   return new Promise((fulfill, reject) =>  {
     request(getTTSRequestUrl(audioText), (error, response, body) => {
       if (error) {
@@ -11,7 +13,10 @@ function Acapela(audioText) {
         if (response.statusCode === 200) {
           // Unescape url
           const audioUrl = JSON.parse(body).snd_url.replace('\\', '');
-          fulfill(audioUrl);
+          downloadAudioFile(audioUrl, path)
+          .then((audioPath) => {
+            fulfill(audioPath);
+          }, reject);
         } else {
           reject(new Error(`Response is unexpected: ${response.statusCode}`));
         }
@@ -37,6 +42,28 @@ function getTTSRequestUrl(reqText) {
   };
   url.query(uri.buildQuery(data));
   return url.toString();
+}
+
+function downloadAudioFile(url, path) {
+  return new Promise((fulfill, reject) => {
+    request(url, { encoding: 'binary' }, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else {
+        if (response.statusCode === 200) {
+          fs.writeFile(path, body, 'binary', (err) => {
+            if (err) {
+              reject(err);
+            }
+            winston.info(`Audio file saved to ${path}`);
+            fulfill(path);
+          });
+        } else {
+          reject(error);
+        }
+      }
+    });
+  });
 }
 
 module.exports = Acapela;
