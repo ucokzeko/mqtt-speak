@@ -5,6 +5,9 @@ const Processor = require('./module/audio-processor.js');
 const client = mqtt.connect('mqtt://localhost');
 const winston = require('winston');
 
+winston.info(`Audio path: ${config.audio.path}`);
+winston.info(`Subscribed channel: ${config.channel.sub}`);
+winston.info(`Published channel: ${config.channel.pub}`);
 
 client.on('connect', () => {
   client.subscribe(config.channel.sub);
