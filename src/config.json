@@ -1,7 +1,7 @@
 {
   "audio": {
     "path": "./audio/"
-  }, "channel" : {
+  }, "topic" : {
     "sub": "say/#",
     "pub": "play/audio"
   }, "acapela": {

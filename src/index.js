@@ -6,11 +6,11 @@ const client = mqtt.connect('mqtt://localhost');
 const winston = require('winston');
 
 winston.info(`Audio path: ${config.audio.path}`);
-winston.info(`Subscribed channel: ${config.channel.sub}`);
-winston.info(`Published channel: ${config.channel.pub}`);
+winston.info(`Subscribed topic: ${config.topic.sub}`);
+winston.info(`Published topic: ${config.topic.pub}`);
 
 client.on('connect', () => {
-  client.subscribe(config.channel.sub);
+  client.subscribe(config.topic.sub);
   try {
     fs.lstatSync(config.audio.path);
   } catch (e) {
@@ -22,7 +22,7 @@ client.on('message', (topic, message) => {
   winston.info(`Message received: ${message.toString()}`);
   new Processor(message.toString(), config.audio.path)
   .then((path) => {
-    client.publish(config.channel.pub, path);
+    client.publish(config.topic.pub, path);
     winston.info(`Audio path published with data: ${path}`);
   }, (error) => {
     winston.error(error);
