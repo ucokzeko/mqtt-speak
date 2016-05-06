@@ -61,7 +61,7 @@ function publishToPlayer() {
 
 function finishTest() {
   if (readyToClose) {
-    winston.info('Test succeeded');
+    winston.info('Test succeed');
     process.exit();
   } else {
     readyToClose = true;
