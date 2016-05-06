@@ -5,12 +5,11 @@ const Processor = require('./module/audio-processor.js');
 const client = mqtt.connect('mqtt://localhost');
 const winston = require('winston');
 
-winston.info(`Audio path: ${config.audio.path}`);
-winston.info(`Subscribed topic: ${config.topic.sub}`);
-winston.info(`Published topic: ${config.topic.pub}`);
-
 client.on('connect', () => {
   client.subscribe(config.topic.sub);
+  winston.info(`Audio path: ${config.audio.path}`);
+  winston.info(`Subscribed topic: ${config.topic.sub}`);
+  winston.info(`Published topic: ${config.topic.pub}`);
   try {
     fs.lstatSync(config.audio.path);
   } catch (e) {
