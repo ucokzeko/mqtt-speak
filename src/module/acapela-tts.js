@@ -1,10 +1,11 @@
-const fs = require('fs');
+const fs      = require('fs');
 const request = require('request');
-const uri = require('urijs');
-const config = require('config.json')(`${__dirname}/../config.json`);
+const uri     = require('urijs');
 const winston = require('winston');
 
-function Acapela(audioText, path) {
+const config = require('config.json')(`${__dirname}/../config.json`);
+
+function fetch(audioText, path) {
   return new Promise((fulfill, reject) =>  {
     request(getTTSRequestUrl(audioText), (error, response, body) => {
       if (error) {
@@ -66,4 +67,4 @@ function downloadAudioFile(url, path) {
   });
 }
 
-module.exports = Acapela;
+module.exports = { fetch };
