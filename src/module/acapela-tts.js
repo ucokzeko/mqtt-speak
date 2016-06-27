@@ -5,7 +5,7 @@ const winston = require('winston');
 
 const config = require('config.json')(`${__dirname}/../config.json`);
 
-function get(audioText, path) {
+function fetch(audioText, path) {
   return new Promise((fulfill, reject) =>  {
     request(getTTSRequestUrl(audioText), (error, response, body) => {
       if (error) {
@@ -67,4 +67,4 @@ function downloadAudioFile(url, path) {
   });
 }
 
-module.exports = { get };
+module.exports = { fetch };
