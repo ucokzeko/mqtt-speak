@@ -1,31 +1,41 @@
-const fs = require('fs');
-const mqtt = require('mqtt');
-const config = require('config.json')(`${__dirname}/config.json`);
-const Processor = require('./module/audio-processor.js');
-const client = mqtt.connect('mqtt://localhost');
-const winston = require('winston');
+const mkdirp       = require('mkdirp');
+const mqtt         = require('mqtt');
+const winston      = require('winston');
+const TTSProcessor = require('./module/tts-processor.js');
 
+const config    = require('config.json')(`${__dirname}/config.json`);
+const client    = mqtt.connect('mqtt://localhost');
 const audioPath = process.env.SPEAK_AUDIO_PATH || config.audio.path;
 
+winston.info(`Audio path:       ${audioPath}`);
+winston.info(`Subscribed topic: ${config.topic.sub}`);
+winston.info(`Published topic:  ${config.topic.pub}`);
+
 client.on('connect', () => {
+  winston.info('Connected to MQTT Broker. Awaiting messages.');
   client.subscribe(config.topic.sub);
-  winston.info(`Audio path: ${audioPath}`);
-  winston.info(`Subscribed topic: ${config.topic.sub}`);
-  winston.info(`Published topic: ${config.topic.pub}`);
-  try {
-    fs.lstatSync(audioPath);
-  } catch (e) {
-    fs.mkdirSync(audioPath);
-  }
+
+  mkdirp(audioPath, (err) => {
+    if (err) {
+      winston.error(err);
+    }
+  });
 });
 
-client.on('message', (topic, message) => {
-  winston.info(`Message received: ${message.toString()}`);
-  new Processor(message.toString(), audioPath)
-  .then((path) => {
-    client.publish(config.topic.pub, path);
-    winston.info(`Audio path published with data: ${path}`);
-  }, (error) => {
-    winston.error(error);
-  });
+client.on('message', (topic, rawMessage) => {
+  const message = rawMessage.toString();
+  try {
+    const toSpeak = JSON.parse(message).message;
+    winston.info(`Message received: '${message}'`);
+
+    new TTSProcessor(toSpeak, audioPath)
+    .then((path) => {
+      client.publish(config.topic.pub, path);
+      winston.info(`Audio path published with data: ${path}`);
+    }, (error) => {
+      winston.error(error);
+    });
+  } catch (e) {
+    winston.error(`Message failed. Probably invalid JSON. ${e}`);
+  }
 });
