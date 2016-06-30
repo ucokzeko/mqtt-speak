@@ -1,4 +1,4 @@
-{mkService, callPackage, nodejs, mqtt-speak ? callPackage ./default.nix {}, mosquitto}:
+{mkService, callPackage, nodejs, mqtt-speak ? callPackage ./release.nix {}, mosquitto}:
 
 mkService {
   name = "mqtt-speak";
