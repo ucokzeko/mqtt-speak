@@ -8,19 +8,15 @@ Node app that listens to MQTT queue on specific topic (can be found in `./src/co
 - Update environment variables
 - `npm start`
 
-Required environment variable
+Required environment variables:
 ```
-export ACAPELA_TTS_LOGIN="login"
-export ACAPELA_TTS_APP="app id"
-export ACAPELA_TTS_PWD="password"
+export DETOX_CENTRAL_ADDRESS=""
 ```
+
+These should be automatically provided by the build system
 
 ### TTS Service
-This app is currently only support `acapela-group` 
-
-You need to get API access information to be able to use this app
-
-More information can be found on (http://www.acapela-group.com/)
+This app works via the detox central server and your service must have access to that server.
 
 ### Notes
 You can add `export` to `~/.profile` or `~/.bash_profile` to make it set up automatically during start up

@@ -3,9 +3,9 @@ const request = require('request');
 const uri     = require('urijs');
 const winston = require('winston');
 
-const detoxCentralUrl = process.env.DETOX_CENTRAL_URL;
+const detoxCentralUrl = process.env.DETOX_CENTRAL_ADDRESS;
 if (!detoxCentralUrl) {
-  throw new Error('DETOX_CENTRAL_URL not defined!');
+  throw new Error('DETOX_CENTRAL_ADDRESS not defined!');
 }
 
 function fetch(message, path) {
