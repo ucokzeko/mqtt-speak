@@ -4,7 +4,6 @@ mkService {
   name = "mqtt-speak";
   dependsOn = [ mosquitto ];
   environment = {
-    DETOX_CENTRAL_URL = "SOME_URL";
     SPEAK_AUDIO_PATH = "/tmp/mqtt-speak/";
   };
   user.name = "mqtt-speak";
