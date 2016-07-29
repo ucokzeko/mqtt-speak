@@ -35,6 +35,3 @@ You can manually publish a message to specified topic with `mosquitto_pub`
 
 For example
 `mosquitto_pub -h localhost -t 'say/test' -m 'This is a test audio'`
-
-
-**Replace acapela login detail to your desired configuration**
