@@ -6,6 +6,8 @@ const winston = require('winston');
 const detoxCentralUrl = process.env.DETOX_CENTRAL_ADDRESS;
 if (!detoxCentralUrl) {
   throw new Error('DETOX_CENTRAL_ADDRESS not defined!');
+} else {
+  detoxCentralUrl = detoxCentralUrl.split('//')[1];
 }
 
 function fetch(message, path) {
