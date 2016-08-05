@@ -2,20 +2,20 @@ const mkdirp       = require('mkdirp');
 const mqtt         = require('mqtt');
 const winston      = require('winston');
 const TTSProcessor = require('./module/tts-processor.js');
+const consts       = require(`${__dirname}/support/constants`);
 
 const config    = require('config.json')(`${__dirname}/config.json`);
 const client    = mqtt.connect('mqtt://localhost');
-const audioPath = process.env.SPEAK_AUDIO_PATH || config.audio.path;
 
-winston.info(`Audio path:       ${audioPath}`);
-winston.info(`Subscribed topic: ${config.topic.sub}`);
-winston.info(`Published topic:  ${config.topic.pub}`);
+winston.info(`Audio path:       ${consts.audioPath}`);
+winston.info(`Subscribed topic: ${consts.speakTopic}`);
+winston.info(`Published topic:  ${consts.playTopic}`);
 
 client.on('connect', () => {
   winston.info('Connected to MQTT Broker. Awaiting messages.');
-  client.subscribe(config.topic.sub);
+  client.subscribe(consts.speakTopic);
 
-  mkdirp(audioPath, (err) => {
+  mkdirp(consts.audioPath, (err) => {
     if (err) {
       winston.error(err);
     }
@@ -28,9 +28,9 @@ client.on('message', (topic, rawMessage) => {
     const toSpeak = JSON.parse(message).message;
     winston.info(`Message received: '${message}'`);
 
-    new TTSProcessor(toSpeak, audioPath)
+    new TTSProcessor(toSpeak, consts.audioPath)
     .then((path) => {
-      client.publish(config.topic.pub, path);
+      client.publish(consts.playTopic, path);
       winston.info(`Audio path published with data: ${path}`);
     }, (error) => {
       winston.error(error);

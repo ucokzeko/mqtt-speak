@@ -2,13 +2,9 @@ const fs      = require('fs');
 const request = require('request');
 const uri     = require('urijs');
 const winston = require('winston');
+const consts  = require(`${__dirname}/../support/constants`);
 
-const detoxCentralUrl = process.env.DETOX_CENTRAL_ADDRESS;
-if (!detoxCentralUrl) {
-  throw new Error('DETOX_CENTRAL_ADDRESS not defined!');
-} else {
-  detoxCentralUrl = detoxCentralUrl.split('//')[1];
-}
+let detoxCentralUrl = consts.detoxCentralAddress.split('//')[1];
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
