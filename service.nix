@@ -8,15 +8,15 @@ mkService rec {
 
   dependsOn = [ mosquitto ];
   environment = {
-    SPEAK_AUDIO_PATH = "/var/lib/${user.name}/audio-files/";
+    SPEAK_AUDIO_PATH = "${user.home}/audio-files/";
   };
     
   script = "
-    if [ -d /var/lib/${user.name}/audio-files/ ]
+    if [ -d ~/audio-files/ ]
     then
-      echo '/var/lib/${user.name}/audio-files/ found.'
+      echo '~/audio-files/ found.'
     else
-      mkdir /var/lib/${user.name}/audio-files
+      mkdir ~/audio-files
     fi
 
     chmod -R o+rx ~/
