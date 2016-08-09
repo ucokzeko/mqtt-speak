@@ -4,7 +4,6 @@ const winston      = require('winston');
 const TTSProcessor = require('./module/tts-processor.js');
 const consts       = require(`${__dirname}/support/constants`);
 
-const config    = require('config.json')(`${__dirname}/config.json`);
 const client    = mqtt.connect('mqtt://localhost');
 
 winston.info(`Audio path:       ${consts.audioPath}`);

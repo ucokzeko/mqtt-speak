@@ -1,10 +1,8 @@
 const fs      = require('fs');
 const request = require('request');
-const uri     = require('urijs');
+const parse   = require('url-parse');
 const winston = require('winston');
 const consts  = require(`${__dirname}/../support/constants`);
-
-let detoxCentralUrl = consts.detoxCentralAddress.split('//')[1];
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
@@ -24,22 +22,16 @@ function fetch(message, path) {
 }
 
 function getTTSRequestUrl() {
-  const url = uri({
-    protocol: 'http',
-    hostname: detoxCentralUrl,
-    path:     'tts'
-  });
-
+  const url = parse(consts.detoxCentralAddress);
+  url.set('pathname', '/tts');
+  console.log(url.toString());
   return url.toString();
 }
 
 function buildDownloadUrl(downloadPath) {
-  const url = uri({
-    protocol: 'http',
-    hostname: detoxCentralUrl,
-    path:     downloadPath
-  });
-
+  const url = parse(consts.detoxCentralAddress);
+  url.set('pathname', `/${downloadPath}`);
+  console.log(url.toString());
   return url.toString();
 }
 

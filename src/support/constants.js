@@ -12,7 +12,7 @@ const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
 const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 
 const speakTopic = 'say/#';
-const playTopic  = `play/audio`;
+const playTopic  = 'play/audio';
 
 module.exports = {
   speakTopic,
