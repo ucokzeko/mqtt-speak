@@ -17,10 +17,7 @@ in rec {
     name = "mqtt-speak-0.0.1";
     src = [ tarball ];
     buildInputs = nodePackages.nativeDeps."mqtt-speak" or [];
-    deps = [ nodePackages.by-spec."config.json"."0.0.4" nodePackages.by-spec."crypto-js"."3.1.6" nodePackages.by-spec."mkdirp"."^0.5.1" nodePackages.by-spec."mqtt"."1.8.0" nodePackages.by-spec."request"."2.71.0" nodePackages.by-spec."urijs"."1.16.1" nodePackages.by-spec."winston"."2.2.0" ];
+    deps = [ nodePackages.by-spec."config.json"."0.0.4" nodePackages.by-spec."crypto-js"."3.1.6" nodePackages.by-spec."mkdirp"."^0.5.1" nodePackages.by-spec."mqtt"."1.8.0" nodePackages.by-spec."request"."2.71.0" nodePackages.by-spec."winston"."2.2.0" nodePackages.by-spec."url-parse"."1.1.1" ];
     peerDependencies = [];
-  };
-  dev = build.override {
-    buildInputs = build.buildInputs ++ [ nodePackages.by-spec."eslint"."^2.8.0" nodePackages.by-spec."eslint-config-airbnb"."^7.0.0" nodePackages.by-spec."eslint-plugin-jsx-a11y"."^0.6.2" nodePackages.by-spec."eslint-plugin-react"."^4.3.0" ];
   };
 }
