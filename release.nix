@@ -21,7 +21,7 @@ in rec {
       export MOSQUITTO_ADDRESS=mqtt://localhost:1883
       export SPEAK_AUDIO_PATH=~/test/
       npm run lint
-      npm test
+      npm run unitTests
     '';
     doCheck = true;
   });
@@ -29,6 +29,6 @@ in rec {
   # Will be run in a container with all Detox services running
   integrationTest = ''
     cd ${test}/lib/node_modules/mqtt-speak
-    INTEGRATION_TESTING=2 ${pkgs.nodejs}/bin/npm run integration
+    INTEGRATION_TESTING=1 ${pkgs.nodejs}/bin/npm run integrationTests
   '';
 }
