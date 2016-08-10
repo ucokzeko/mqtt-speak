@@ -15,8 +15,15 @@ launchHost().then(() => {
 
 function launchMqttSpeak() {
   return new Promise((resolve) => {
-    winston.info('Launching mqtt speak service...');
-    const service = spawn('npm', ['start']);
+    const service = (() => {
+      if (process.env.INTEGRATION_TESTING) {
+        winston.info('Connecting to service journal...');
+        return spawn('journalctl', ['-fu', 'mqtt-speak']);
+      } else {
+        winston.info('Launching mqtt speak service...');
+        return spawn('npm', ['start']);
+      }
+    })();
 
     service.stdout.on('data', (data) => {
       winston.info(`MQTT-Speak log: ${data}`);
