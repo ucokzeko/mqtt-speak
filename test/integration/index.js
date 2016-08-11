@@ -1,68 +1,54 @@
-const winston  = require('winston');
-const spawn    = require('child_process').spawn;
-const tests    = require(`${__dirname}/test_module/index`);
+const fse     = require('fs-extra');
+const winston = require('winston');
+const spawn   = require('child_process').spawn;
+const consts  = require(`${__dirname}/../../src/support/constants`);
 
-launchHost().then(() => {
-  launchMqttSpeak().then(() => {
-    winston.info('Starting tests');
-    tests.startTest().then(() => {
+launchService('Host', spawn('node', ['--use_strict', `${__dirname}/host.js`]))
+.then(() => {
+  const serviceName = 'MQTT Speak';
+  let command       = spawn('npm', ['start']);
+
+  if (process.env.INTEGRATION_TESTING) {
+    command = spawn('journalctl', ['-fu', 'mqtt-speak']);
+  }
+
+  launchService(serviceName, command).then(() => {
+    launchService('Integration Tests', spawn('./node_modules/.bin/mocha', ['--use_strict', `${__dirname}/test_module/`]))
+    .then(() => {
       finishTest();
-    }, (error) => {
-      winston.error(error);
     });
   });
 });
 
-function launchMqttSpeak() {
+function launchService(serviceName, command) {
+  let resolveTimer = null;
+
   return new Promise((resolve) => {
-    const service = (() => {
-      if (process.env.INTEGRATION_TESTING) {
-        winston.info('Connecting to service journal...');
-        return spawn('journalctl', ['-fu', 'mqtt-speak']);
-      } else {
-        winston.info('Launching mqtt speak service...');
-        return spawn('npm', ['start']);
-      }
-    })();
+    winston.info(`Launching ${serviceName} service...`);
+    const service = command;
 
     service.stdout.on('data', (data) => {
-      winston.info(`MQTT-Speak log: ${data}`);
-      if (data.indexOf('Connected to MQTT Broker') > -1) {
+      winston.info(`${serviceName} log: ${data}`);
+      clearTimeout(resolveTimer);
+      resolveTimer = setTimeout(() => {
         resolve();
-      }
+      }, 1000 * 3);
     });
 
     service.stderr.on('data', (data) => {
-      winston.info(`MQTT-Speak log: ${data}`);
+      winston.info(`${serviceName} log: ${data}`);
     });
 
     service.on('close', (code) => {
-      winston.info(`MQTT-Speak exited with code ${code}`);
+      winston.info(`${serviceName} exited with code ${code}`);
     });
-  });
-}
-
-function launchHost() {
-  return new Promise((resolve) => {
-    winston.info('Launching host service...');
-    const service = spawn('node', ['--use_strict', `${__dirname}/host.js`]);
-
-    service.stdout.on('data', (data) => {
-      winston.info(`Host log: ${data}`);
-    });
-
-    service.stderr.on('data', (data) => {
-      winston.info(`Host log: ${data}`);
-    });
-
-    service.on('close', (code) => {
-      winston.info(`Host exited with code ${code}`);
-    });
-    resolve();
   });
 }
 
 function finishTest() {
-  winston.info('Test succeed');
-  process.exit();
+  winston.info('Test succeed. Start cleaning...');
+  fse.remove(consts.audioPath, (error) => {
+    if (error) throw error;
+    else process.exit();
+  });
 }
