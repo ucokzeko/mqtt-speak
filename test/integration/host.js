@@ -11,6 +11,11 @@ app.post('/tts', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(result));
 });
+
+app.get('/test', (req, res) => {
+  res.send('Up');
+});
+
 app.use(express.static(`${__dirname}/audio`));
 
 app.listen(port);
