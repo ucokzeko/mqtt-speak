@@ -18,15 +18,15 @@ describe('Detox Central TTS', () => {
 
     it('should throw error when param contains space', (done) => {
       const param = 'tts download';
-      assert.doesNotThrow(() => {
+      assert.throws(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
-      }, (error) =>
-        error
+      },
+        /undefined == true/
       );
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains * character', (done) => {
       const param = 'tts*download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -36,7 +36,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains - character', (done) => {
       const param = 'tts-download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -46,7 +46,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains _ character', (done) => {
       const param = 'tts_download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -56,7 +56,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains . character', (done) => {
       const param = 'tts.download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -66,7 +66,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains / character', (done) => {
       const param = 'tts/download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -76,7 +76,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains ( ) character', (done) => {
       const param = 'tts(download)';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -86,7 +86,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains \ character', (done) => {
       const param = 'tts\download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -96,7 +96,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains character', (done) => {
+    it('should not throw error when param contains @ character', (done) => {
       const param = 'tts@download';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -106,7 +106,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param contains numbers', (done) => {
+    it('should not throw error when param contains numbers', (done) => {
       const param = 'tts12345';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -116,7 +116,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param is complex path', (done) => {
+    it('should not throw error when param is complex path', (done) => {
       const param = 'tts/audio/files';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));
@@ -126,7 +126,7 @@ describe('Detox Central TTS', () => {
       done();
     });
 
-    it('should throw error when param is complex path', (done) => {
+    it('should not throw error when param is complex path', (done) => {
       const param = 'tts/test.mp3';
       assert.doesNotThrow(() => {
         assert.ok(validUrl.isUri(tts.__get__('buildURL')(param)));

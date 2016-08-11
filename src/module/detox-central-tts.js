@@ -23,7 +23,7 @@ function fetch(message, path) {
 
 function buildURL(path) {
   const url = parse(consts.detoxCentralAddress, true);
-  url.set('pathname', `/${encodeURIComponent(path)}`);
+  url.set('pathname', `/${path}`);
   return url.toString();
 }
 
