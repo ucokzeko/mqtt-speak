@@ -3,16 +3,16 @@ const winston = require('winston');
 const spawn   = require('child_process').spawn;
 const consts  = require(`${__dirname}/../../src/support/constants`);
 
-launchService('Host', spawn('node', ['--use_strict', `${__dirname}/host.js`]))
-.then(() => {
-  const serviceName = 'MQTT Speak';
-  let command       = spawn('npm', ['start']);
+const hostProcess    = spawn('node', ['--use_strict', `${__dirname}/host.js`]);
+let mqttSpeakProcess = spawn('npm', ['start']);
 
+launchService('Host', hostProcess)
+.then(() => {
   if (process.env.INTEGRATION_TESTING) {
-    command = spawn('journalctl', ['-fu', 'mqtt-speak']);
+    mqttSpeakProcess = spawn('journalctl', ['-fu', 'mqtt-speak']);
   }
 
-  launchService(serviceName, command).then(() => {
+  launchService('MQTT Speak', mqttSpeakProcess).then(() => {
     launchService('Integration Tests', spawn('./node_modules/.bin/mocha', ['--use_strict', `${__dirname}/test_module/`]))
     .then(() => {
       finishTest();
@@ -47,6 +47,10 @@ function launchService(serviceName, command) {
 
 function finishTest() {
   winston.info('Test succeed. Start cleaning...');
+
+  hostProcess.kill('SIGINT');
+  mqttSpeakProcess.kill('SIGINT');
+
   fse.remove(consts.audioPath, (error) => {
     if (error) throw error;
     else process.exit();
