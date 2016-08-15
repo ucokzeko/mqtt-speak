@@ -8,12 +8,12 @@ describe('URL builder', () => {
   describe('URL builder#url request', () => {
     it('should not throw error when url is reachable', (done) => {
       const url = tts.__get__('buildURL')('test');
-      isUrlValid(url).then(()=> {
+      isUrlValid(url).then(() => {
         done();
       }, (error) => {
         assert.throws(() => {
           throw error;
-        }, 
+        },
           /Url is unreachable/
         );
         done();
@@ -23,12 +23,12 @@ describe('URL builder', () => {
 
     it('should throw error when url is unreachable', (done) => {
       const url = tts.__get__('buildURL')('download');
-      isUrlValid(url).then(()=> {
+      isUrlValid(url).then(() => {
         done();
       }, (error) => {
         assert.throws(() => {
           throw error;
-        }, 
+        },
           /Url is unreachable/
         );
         done();
@@ -38,12 +38,12 @@ describe('URL builder', () => {
 
     it('should not throw error after requesting unreachable address', (done) => {
       const url = tts.__get__('buildURL')('test');
-      isUrlValid(url).then(()=> {
+      isUrlValid(url).then(() => {
         done();
       }, (error) => {
         assert.throws(() => {
           throw error;
-        }, 
+        },
           /Url is unreachable/
         );
         done();
@@ -53,14 +53,13 @@ describe('URL builder', () => {
 });
 
 function isUrlValid(url) {
-  console.log(url);
   return new Promise((resolve, reject) => {
     request(url, (error, res) => {
       if (error) {
         reject(error);
       } else {
         if (res.statusCode !== 200) {
-          reject(new Error(`Url is unreachable: ${url}`)); 
+          reject(new Error(`Url is unreachable: ${url}`));
         } else {
           resolve();
         }
