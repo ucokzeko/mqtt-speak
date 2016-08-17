@@ -17,9 +17,6 @@ in rec {
   test = pkgs.lib.overrideDerivation pkg.dev (o: {
     name = "${o.name}-test";
     checkPhase = ''
-      export DETOX_CENTRAL_ADDRESS=http://localhost:3001 
-      export MOSQUITTO_ADDRESS=mqtt://localhost:1883
-      export SPEAK_AUDIO_PATH=~/test/
       npm run lint
       npm run unitTests
     '';

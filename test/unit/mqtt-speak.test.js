@@ -2,6 +2,8 @@ const rewire   = require('rewire');
 const assert   = require('assert');
 const validUrl = require('valid-url');
 
+require(`${__dirname}/config`).init();
+
 describe('Detox Central TTS', () => {
   const tts = rewire(`${__dirname}/../../src/module/detox-central-tts.js`);
 
