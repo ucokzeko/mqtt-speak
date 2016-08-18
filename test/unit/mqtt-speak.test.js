@@ -5,7 +5,7 @@ const validUrl = require('valid-url');
 require('./config').init();
 
 describe('Detox Central TTS', () => {
-  const tts = rewire('./../../src/module/detox-central-tts.js');
+  const tts = rewire('../../src/module/detox-central-tts.js');
 
   describe('Detox Central TTS#buildURL()', () => {
     it('should not throw error param is valid', (done) => {

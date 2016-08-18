@@ -1,10 +1,11 @@
-const fse     = require('fs-extra');
 const winston = require('winston');
+const fse     = require('fs-extra');
 const spawn   = require('child_process').spawn;
-const consts  = require('./../../src/support/constants');
 
-const hostProcess    = spawn('node', ['--use_strict', './test/integration/host.js']);
+const consts  = require('../../src/support/constants');
+
 let mqttSpeakProcess = spawn('npm', ['start']);
+const hostProcess    = spawn('node', ['--use_strict', './test/integration/host.js']);
 
 launchService('Host', hostProcess)
 .then(() => {

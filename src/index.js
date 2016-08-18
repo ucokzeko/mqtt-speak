@@ -1,10 +1,11 @@
-const mkdirp       = require('mkdirp');
-const mqtt         = require('mqtt');
-const winston      = require('winston');
-const TTSProcessor = require('./module/tts-processor.js');
-const consts       = require('./support/constants');
+const mqtt    = require('mqtt');
+const mkdirp  = require('mkdirp');
+const winston = require('winston');
 
-const client    = mqtt.connect(consts.mqttHost);
+const consts       = require('./support/constants');
+const TTSProcessor = require('./module/tts-processor.js');
+
+const client = mqtt.connect(consts.mqttHost);
 
 winston.info(`Audio path:       ${consts.audioPath}`);
 winston.info(`Subscribed topic: ${consts.speakTopic}`);
