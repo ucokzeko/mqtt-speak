@@ -3,7 +3,7 @@ const assert  = require('assert');
 const request = require('request');
 
 describe('URL builder', () => {
-  const tts  = rewire(`${__dirname}/../../../src/module/detox-central-tts.js`);
+  const tts  = rewire('./../../../src/module/detox-central-tts.js');
 
   describe('URL builder#url request', () => {
     it('should not throw error when url is reachable', (done) => {

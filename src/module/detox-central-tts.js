@@ -2,7 +2,7 @@ const fs      = require('fs');
 const request = require('request');
 const parse   = require('url-parse');
 const winston = require('winston');
-const consts  = require(`${__dirname}/../support/constants`);
+const consts  = require('./../support/constants');
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {

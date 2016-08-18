@@ -3,7 +3,8 @@ const mqtt    = require('mqtt');
 const rewire  = require('rewire');
 const assert  = require('assert');
 const winston = require('winston');
-const consts  = require(`${__dirname}/../../../src/support/constants`);
+
+const consts  = require('./../../../src/support/constants');
 
 const client = mqtt.connect(consts.mqttHost);
 
@@ -11,7 +12,7 @@ const mqttConfig = { qos: 1 };
 
 describe('MQTT', () => {
   const topic     = consts.speakTopic.replace('#', 'test');
-  const processor = rewire(`${__dirname}/../../../src/module/tts-processor.js`);
+  const processor = rewire('./../../../src/module/tts-processor.js');
 
   describe('MQTT#publish message', () => {
     it('should not throw error when message contains only alphabetic characters', (done) => {

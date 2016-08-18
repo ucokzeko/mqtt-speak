@@ -2,7 +2,7 @@ const mkdirp       = require('mkdirp');
 const mqtt         = require('mqtt');
 const winston      = require('winston');
 const TTSProcessor = require('./module/tts-processor.js');
-const consts       = require(`${__dirname}/support/constants`);
+const consts       = require('./support/constants');
 
 const client    = mqtt.connect(consts.mqttHost);
 

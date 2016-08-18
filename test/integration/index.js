@@ -1,9 +1,9 @@
 const fse     = require('fs-extra');
 const winston = require('winston');
 const spawn   = require('child_process').spawn;
-const consts  = require(`${__dirname}/../../src/support/constants`);
+const consts  = require('./../../src/support/constants');
 
-const hostProcess    = spawn('node', ['--use_strict', `${__dirname}/host.js`]);
+const hostProcess    = spawn('node', ['--use_strict', './test/integration/host.js']);
 let mqttSpeakProcess = spawn('npm', ['start']);
 
 launchService('Host', hostProcess)
@@ -13,7 +13,7 @@ launchService('Host', hostProcess)
   }
 
   launchService('MQTT Speak', mqttSpeakProcess).then(() => {
-    launchService('Integration Tests', spawn('./node_modules/.bin/mocha', ['--use_strict', `${__dirname}/test_module/`]))
+    launchService('Integration Tests', spawn('./node_modules/.bin/mocha', ['--use_strict', './test/integration/test_module/']))
     .then(() => {
       finishTest();
     });
