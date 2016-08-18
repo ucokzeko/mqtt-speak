@@ -26,6 +26,6 @@ in rec {
   # Will be run in a container with all Detox services running
   integrationTest = ''
     cd ${test}/lib/node_modules/mqtt-speak
-    INTEGRATION_TESTING=1 ${pkgs.nodejs}/bin/npm run integrationTests
+    INTEGRATION_TESTING=1 DETOX_CENTRAL_ADDRESS=http://localhost:3001 ${pkgs.nodejs}/bin/npm run integrationTests
   '';
 }
