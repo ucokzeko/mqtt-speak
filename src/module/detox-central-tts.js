@@ -1,17 +1,18 @@
 const fs      = require('fs');
+const winston = require('winston');
 const request = require('request');
 const parse   = require('url-parse');
-const winston = require('winston');
-const consts  = require(`${__dirname}/../support/constants`);
+
+const consts = require('../support/constants');
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
-    request.post(getTTSRequestUrl(), { json: { message } }, (err, response, body) => {
+    request.post(buildURL('tts'), { json: { message } }, (err, response, body) => {
       if (err) {
         reject(err);
       } else {
         if (response.statusCode === 200 || response.statusCode === 201) {
-          const downloadUrl = buildDownloadUrl(body.relative_url);
+          const downloadUrl = buildURL(body.relative_url);
           downloadAudioFile(downloadUrl, path).then((audioPath) => { fulfill(audioPath); }, reject);
         } else {
           reject(new Error(`Response is unexpected! ${response.statusCode} : ${body}`));
@@ -21,17 +22,9 @@ function fetch(message, path) {
   });
 }
 
-function getTTSRequestUrl() {
-  const url = parse(consts.detoxCentralAddress);
-  url.set('pathname', '/tts');
-  console.log(url.toString());
-  return url.toString();
-}
-
-function buildDownloadUrl(downloadPath) {
-  const url = parse(consts.detoxCentralAddress);
-  url.set('pathname', `/${downloadPath}`);
-  console.log(url.toString());
+function buildURL(path) {
+  const url = parse(consts.detoxCentralAddress, true);
+  url.set('pathname', `/${path}`);
   return url.toString();
 }
 
