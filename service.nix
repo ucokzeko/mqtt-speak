@@ -1,6 +1,7 @@
 {mkService, callPackage, nodejs, mqtt-speak ? callPackage ./release.nix {}, mosquitto}:
-
-mkService rec {
+let
+  executionPath = ''${mqtt-speak.build}/lib/node_modules/mqtt-speak'';
+in mkService rec {
   name = "mqtt-speak";
 
   user.name = "mqtt-speak";
@@ -20,6 +21,7 @@ mkService rec {
     fi
 
     chmod -R o+rx ~/
-    exec ${nodejs}/bin/node --use_strict ${mqtt-speak.build}/lib/node_modules/mqtt-speak/src/index.js
+    cd ${executionPath}
+    exec ${nodejs}/bin/node --use_strict ${executionPath}/dist/app.js
   ";
 }
