@@ -3,8 +3,8 @@
 
 let
   pkg = pkgs.callPackage mqtt-speak {};
-  externalNodeOptions = "--external request";
-  buildTools = pkgs.callPackage ./build_scripts/build.nix { externalNodeOptions=externalNodeOptions;};
+  externalNodePackages = ["request"];
+  buildTools = pkgs.callPackage ./build_scripts/build.nix { externalNodePackages=externalNodePackages;};
 in rec {
   inherit (pkg) tarball;
 
