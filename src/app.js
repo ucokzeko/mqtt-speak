@@ -7,6 +7,12 @@ const TTSProcessor = require('./module/tts-processor.js');
 
 const client = mqtt.connect(consts.mqttHost);
 
+const express = require('express');
+const app = express();
+const path = require('path');
+
+app.set('port', consts.port);
+
 winston.info(`Audio path:       ${consts.audioPath}`);
 winston.info(`Subscribed topic: ${consts.speakTopic}`);
 winston.info(`Published topic:  ${consts.playTopic}`);
@@ -19,6 +25,12 @@ client.on('connect', () => {
     if (err) {
       winston.error(err);
     }
+  });
+  app.use('/audio', express.static(consts.audioPath));
+
+  const server = app.listen(app.get('port'), () => {
+    const port = server.address().port;
+    winston.info(`Listening on port: '${port}`);
   });
 });
 
@@ -39,3 +51,13 @@ client.on('message', (topic, rawMessage) => {
     winston.error(`Message failed. Probably invalid JSON. ${e}`);
   }
 });
+
+// Makes a url to a given served file path
+function buildDownloadUrl(downloadPath) {
+  const url = uri({
+    protocol: 'http',
+    hostname: `${consts.hostname}:${consts.port}`,
+    path:     downloadPath
+  });
+  return url.toString();
+}
