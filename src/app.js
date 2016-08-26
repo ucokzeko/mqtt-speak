@@ -42,11 +42,15 @@ client.on('message', (topic, rawMessage) => {
     const playTime = new Date(playTimeMilli).toISOString();
     const toSpeak = JSON.parse(message).message;
     winston.info(`Message received: '${message}'`);
-
     new TTSProcessor(toSpeak, consts.audioPath)
-    .then((path) => {
-      client.publish(consts.playTopic, path);
-      winston.info(`Audio path published with data: ${path}`);
+    .then((filePath) => {
+      const fileName = path.basename(filePath);
+      const url = buildDownloadUrl(path.join(consts.audioPath, fileName));
+      winston.info(`URL: ${url}`);
+      winston.info(`Play at: ${playTime}`);
+      client.publish(consts.playTopic, `{ "url": "${url}", "name": "${fileName}",
+      "time": "${playTime}", "location": ["kitchen", "lounge"] }`, 2);
+      winston.info(`Audio path published with data: ${filePath}`);
     }, (error) => {
       winston.error(error);
     });
