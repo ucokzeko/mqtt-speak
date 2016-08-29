@@ -46,11 +46,9 @@ client.on('message', (topic, rawMessage) => {
     .then((filePath) => {
       const fileName = path.basename(filePath);
       const url = buildDownloadUrl(path.join(consts.audioPath, fileName));
-      winston.info(`URL: ${url}`);
-      winston.info(`Play at: ${playTime}`);
       client.publish(consts.playTopic, `{ "url": "${url}", "name": "${fileName}",
       "time": "${playTime}", "location": ["kitchen", "lounge"] }`, 2);
-      winston.info(`Audio path published with data: ${filePath}`);
+      winston.info(`Published audio URL: ${url}\nTo be played at: ${playTime}`);
     }, (error) => {
       winston.error(error);
     });
