@@ -26,7 +26,7 @@ const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
 const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 
 const speakTopic = 'say/#';
-const playTopic  = 'play/multi';
+const playTopic  = 'play/all';
 let hostname     = '';
 getHostname();
 const port       = 3002;
