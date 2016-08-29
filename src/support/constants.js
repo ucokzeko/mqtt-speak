@@ -10,15 +10,17 @@ function envOrBust(varName) {
 }
 
 function getHostname() {
+  let value;
   const ifaces = os.networkInterfaces();
   Object.keys(ifaces).forEach((ifname) => {
     ifaces[ifname].forEach((iface) => {
       if (iface.family !== 'IPv4' || iface.internal !== false) {
         return;
       }
-      hostname = iface.address;
+      value = iface.address;
     });
   });
+  return value;
 }
 
 const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
@@ -28,9 +30,8 @@ const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';
 const audioURLPath = '/audio';
-let hostname = '';
-getHostname();
-const port       = 3002;
+const hostname     = getHostname();
+const port         = 3002;
 
 module.exports = {
   speakTopic,
