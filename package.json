@@ -4,7 +4,7 @@
   "description": "Message queue for processing TTS",
   "author": "DSTIL",
   "license": "MIT",
-  "main": "index.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dstil/mqtt-speak.git"
@@ -13,7 +13,6 @@
     "url": "https://github.com/dstil/mqtt-speak/issues"
   },
   "dependencies": {
-    "config.json": "0.0.4",
     "crypto-js": "3.1.6",
     "mkdirp": "^0.5.1",
     "mqtt": "1.8.0",
@@ -33,7 +32,7 @@
     "eslint-plugin-react": "^4.3.0"
   },
   "scripts": {
-    "start": "node --use_strict ./src/index.js",
+    "start": "node --use_strict ./src/app.js",
     "unitTests": "mocha --use_strict ./test/unit/",
     "integrationTests": "node --use_strict ./test/integration/index.js",
     "lint": "eslint src"
