@@ -27,7 +27,7 @@ client.on('connect', () => {
       winston.error(err);
     }
   });
-  app.use('/audio', express.static(consts.audioPath));
+  app.use(consts.audioURLPath, express.static(consts.audioPath));
 
   const server = app.listen(app.get('port'), () => {
     const port = server.address().port;
@@ -45,9 +45,9 @@ client.on('message', (topic, rawMessage) => {
     new TTSProcessor(toSpeak, consts.audioPath)
     .then((filePath) => {
       const fileName = path.basename(filePath);
-      const audioUrl = buildDownloadUrl(path.join(consts.audioPath, fileName));
+      const audioUrl = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
       const toPublish = JSON.stringify({
-        url: audioUrl,
+        url:  audioUrl,
         name: fileName,
         time: playTime,
         location: ['kitchen', 'lounge']

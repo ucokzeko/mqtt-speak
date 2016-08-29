@@ -25,9 +25,10 @@ const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
 const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
 const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 
-const speakTopic = 'say/#';
-const playTopic  = 'play/all';
-let hostname     = '';
+const speakTopic   = 'say/#';
+const playTopic    = 'play/all';
+const audioURLPath = '/audio';
+let hostname = '';
 getHostname();
 const port       = 3002;
 
@@ -37,6 +38,7 @@ module.exports = {
   hostname,
   port,
   audioPath,
+  audioURLPath,
   mqttHost,
   detoxCentralAddress
 };
