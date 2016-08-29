@@ -45,10 +45,15 @@ client.on('message', (topic, rawMessage) => {
     new TTSProcessor(toSpeak, consts.audioPath)
     .then((filePath) => {
       const fileName = path.basename(filePath);
-      const url = buildDownloadUrl(path.join(consts.audioPath, fileName));
-      client.publish(consts.playTopic, `{ "url": "${url}", "name": "${fileName}",
-      "time": "${playTime}", "location": ["kitchen", "lounge"] }`, 2);
-      winston.info(`Published audio URL: ${url}\nTo be played at: ${playTime}`);
+      const audioUrl = buildDownloadUrl(path.join(consts.audioPath, fileName));
+      const toPublish = JSON.stringify({
+        url: audioUrl,
+        name: fileName,
+        time: playTime,
+        location: ['kitchen', 'lounge']
+      });
+      client.publish(consts.playTopic, toPublish, 2);
+      winston.info(`Published audio URL: ${audioUrl}\nTo be played at: ${playTime}`);
     }, (error) => {
       winston.error(error);
     });
