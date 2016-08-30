@@ -11,17 +11,16 @@ in mkService rec {
   environment = {
     SPEAK_AUDIO_PATH = "${user.home}/audio-files/";
   };
-    
-  script = "
-    if [ -d ~/audio-files/ ]
+
+  script = ''
+    if [ -d $SPEAK_AUDIO_PATH ]
     then
-      echo '~/audio-files/ found.'
+      echo '$SPEAK_AUDIO_PATH found.'
     else
-      mkdir ~/audio-files
+      mkdir $SPEAK_AUDIO_PATH
     fi
 
-    chmod -R o+rx ~/
     cd ${executionPath}
     exec ${nodejs}/bin/node --use_strict ${executionPath}/dist/app.js
-  ";
+  '';
 }
