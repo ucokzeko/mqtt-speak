@@ -30,12 +30,14 @@ const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';
 const audioURLPath = '/audio';
+const qos          = 2;
 const hostname     = getHostname();
 const port         = 3002;
 
 module.exports = {
   speakTopic,
   playTopic,
+  qos,
   hostname,
   port,
   audioPath,

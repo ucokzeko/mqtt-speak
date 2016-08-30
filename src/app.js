@@ -52,7 +52,7 @@ client.on('message', (topic, rawMessage) => {
         time: playTime,
         location: ['kitchen', 'lounge']
       });
-      client.publish(consts.playTopic, toPublish, 2);
+      client.publish(consts.playTopic, toPublish, consts.qos);
       winston.info(`Published audio URL: ${audioUrl}\nTo be played at: ${playTime}`);
     }, (error) => {
       winston.error(error);
