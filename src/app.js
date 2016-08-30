@@ -12,7 +12,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 
-app.set('port', consts.port);
+app.set('port', consts.ttsCacheServePort);
 
 winston.info(`Audio path:       ${consts.audioPath}`);
 winston.info(`Subscribed topic: ${consts.speakTopic}`);
@@ -66,7 +66,7 @@ client.on('message', (topic, rawMessage) => {
 function buildDownloadUrl(downloadPath) {
   const url = uri({
     protocol: 'http',
-    hostname: `${consts.hostname}:${consts.port}`,
+    hostname: `${consts.hostname}:${consts.ttsCacheServePort}`,
     path:     downloadPath
   });
   return url.toString();

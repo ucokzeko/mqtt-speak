@@ -26,7 +26,7 @@ function getHostname() {
 const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
 const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
 const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
-const port                = envOrBust('TTS_CACHE_SERVE_PORT');
+const ttsCacheServePort   = envOrBust('TTS_CACHE_SERVE_PORT');
 
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';
@@ -39,7 +39,7 @@ module.exports = {
   playTopic,
   qos,
   hostname,
-  port,
+  ttsCacheServePort,
   audioPath,
   audioURLPath,
   mqttHost,
