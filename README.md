@@ -30,6 +30,7 @@ Expected mqtt message format
 ```
 'This is a test audio'
 ```
+The delay between the time a message is received and the time at which the corresponding audio file is played can be set in `./src/support/constants.js`
 
 ### Usage
 Run test script `npm run integrationTests` to test if you set it up properly
