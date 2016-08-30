@@ -14,7 +14,7 @@ function getHostname() {
   const ifaces = os.networkInterfaces();
   Object.keys(ifaces).forEach((ifname) => {
     ifaces[ifname].forEach((iface) => {
-      if (iface.family !== 'IPv4' || iface.internal !== false) {
+      if (iface.family !== 'IPv4' || iface.internal) {
         return;
       }
       value = iface.address;
