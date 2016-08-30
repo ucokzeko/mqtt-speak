@@ -2,6 +2,7 @@ const mqtt    = require('mqtt');
 const mkdirp  = require('mkdirp');
 const winston = require('winston');
 const uri     = require('urijs');
+const path    = require('path');
 
 const consts       = require('./support/constants');
 const TTSProcessor = require('./module/tts-processor.js');
@@ -10,7 +11,6 @@ const client = mqtt.connect(consts.mqttHost);
 
 const express = require('express');
 const app = express();
-const path = require('path');
 
 app.set('port', consts.ttsCacheServePort);
 
