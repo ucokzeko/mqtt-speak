@@ -38,7 +38,7 @@ client.on('connect', () => {
 client.on('message', (topic, rawMessage) => {
   const message = rawMessage.toString();
   try {
-    const playTimeMilli = Number(new Date().getTime()) + 10000; // Set delay time here
+    const playTimeMilli = Number(new Date().getTime()) + consts.playDelay;
     const playTime = new Date(playTimeMilli).toISOString();
     const toSpeak = JSON.parse(message).message;
     winston.info(`Message received: '${message}'`);
@@ -47,7 +47,7 @@ client.on('message', (topic, rawMessage) => {
       const fileName = path.basename(filePath);
       const audioUrl = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
       const toPublish = JSON.stringify({
-        url:  audioUrl,
+        url: audioUrl,
         name: fileName,
         time: playTime,
         location: ['kitchen', 'lounge']
