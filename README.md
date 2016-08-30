@@ -6,6 +6,11 @@ Node app that listens to MQTT queue on specific topic (can be found in `./src/co
 - `git clone https://github.com/ucokzeko/mqtt-play.git`
 - `npm install`
 - Update environment variables
+- `APP_NAME` A name for the service
+- `SPEAK_AUDIO_PATH` The path to the audio cache
+- `MOSQUITTO_ADDRESS` The address of the MQTT broker
+- `DETOX_CENTRAL_ADDRESS` The address used for processing TTS requests
+- `TTS_CACHE_SERVE_PORT` The port used to serve audio files
 - `npm start`
 
 Required environment variables:
@@ -27,11 +32,12 @@ Expected mqtt message format
 ```
 
 ### Usage
-Run test script `npm test` to test if you set it up properly
+Run test script `npm run integrationTests` to test if you set it up properly
+Run test script `npm run unitTests` to perform unit tests
 
 or
 
 You can manually publish a message to specified topic with `mosquitto_pub`
 
 For example
-`mosquitto_pub -h localhost -t 'say/test' -m 'This is a test audio'`
+`mosquitto_pub -h localhost -t 'say/test' -m '{ "message": "This is a test audio" }'`
