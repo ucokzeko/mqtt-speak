@@ -33,7 +33,7 @@ const playTopic    = 'play/all';
 const audioURLPath = '/audio';
 const qos          = 2;
 const hostname     = getHostname();
-const playDelay    = 10000;
+const playDelay    = 2000;
 
 module.exports = {
   speakTopic,
