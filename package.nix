@@ -274,18 +274,19 @@
     os = [ ];
     cpu = [ ];
   };
-  by-spec."async"."^1.5.2" =
-    self.by-version."async"."1.5.2";
-  by-version."async"."1.5.2" = self.buildNodePackage {
-    name = "async-1.5.2";
-    version = "1.5.2";
+  by-spec."async"."^2.0.1" =
+    self.by-version."async"."2.0.1";
+  by-version."async"."2.0.1" = self.buildNodePackage {
+    name = "async-2.0.1";
+    version = "2.0.1";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/async/-/async-1.5.2.tgz";
-      name = "async-1.5.2.tgz";
-      sha1 = "ec6a61ae56480c0c3cb241c95618e20892f9672a";
+      url = "https://registry.npmjs.org/async/-/async-2.0.1.tgz";
+      name = "async-2.0.1.tgz";
+      sha1 = "b709cc0280a9c36f09f4536be823c838a9049e25";
     };
     deps = {
+      "lodash-4.15.0" = self.by-version."lodash"."4.15.0";
     };
     optionalDependencies = {
     };
@@ -369,6 +370,26 @@
     os = [ ];
     cpu = [ ];
   };
+  by-spec."bcrypt-pbkdf"."^1.0.0" =
+    self.by-version."bcrypt-pbkdf"."1.0.0";
+  by-version."bcrypt-pbkdf"."1.0.0" = self.buildNodePackage {
+    name = "bcrypt-pbkdf-1.0.0";
+    version = "1.0.0";
+    bin = false;
+    src = fetchurl {
+      url = "https://registry.npmjs.org/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.0.tgz";
+      name = "bcrypt-pbkdf-1.0.0.tgz";
+      sha1 = "3ca76b85241c7170bf7d9703e7b9aa74630040d4";
+    };
+    deps = {
+      "tweetnacl-0.14.3" = self.by-version."tweetnacl"."0.14.3";
+    };
+    optionalDependencies = {
+    };
+    peerDependencies = [];
+    os = [ ];
+    cpu = [ ];
+  };
   by-spec."bl"."^0.9.1" =
     self.by-version."bl"."0.9.5";
   by-version."bl"."0.9.5" = self.buildNodePackage {
@@ -410,15 +431,15 @@
     cpu = [ ];
   };
   by-spec."bluebird"."^3.1.1" =
-    self.by-version."bluebird"."3.4.1";
-  by-version."bluebird"."3.4.1" = self.buildNodePackage {
-    name = "bluebird-3.4.1";
-    version = "3.4.1";
+    self.by-version."bluebird"."3.4.6";
+  by-version."bluebird"."3.4.6" = self.buildNodePackage {
+    name = "bluebird-3.4.6";
+    version = "3.4.6";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/bluebird/-/bluebird-3.4.1.tgz";
-      name = "bluebird-3.4.1.tgz";
-      sha1 = "b731ddf48e2dd3bedac2e75e1215a11bcb91fa07";
+      url = "https://registry.npmjs.org/bluebird/-/bluebird-3.4.6.tgz";
+      name = "bluebird-3.4.6.tgz";
+      sha1 = "01da8d821d87813d158967e743d5fe6c62cf8c0f";
     };
     deps = {
     };
@@ -792,15 +813,15 @@
     cpu = [ ];
   };
   by-spec."concat-stream"."^1.4.6" =
-    self.by-version."concat-stream"."1.5.1";
-  by-version."concat-stream"."1.5.1" = self.buildNodePackage {
-    name = "concat-stream-1.5.1";
-    version = "1.5.1";
+    self.by-version."concat-stream"."1.5.2";
+  by-version."concat-stream"."1.5.2" = self.buildNodePackage {
+    name = "concat-stream-1.5.2";
+    version = "1.5.2";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/concat-stream/-/concat-stream-1.5.1.tgz";
-      name = "concat-stream-1.5.1.tgz";
-      sha1 = "f3b80acf9e1f48e3875c0688b41b6c31602eea1c";
+      url = "https://registry.npmjs.org/concat-stream/-/concat-stream-1.5.2.tgz";
+      name = "concat-stream-1.5.2.tgz";
+      sha1 = "708978624d856af41a5a741defdd261da752c266";
     };
     deps = {
       "inherits-2.0.1" = self.by-version."inherits"."2.0.1";
@@ -814,7 +835,7 @@
     cpu = [ ];
   };
   by-spec."concat-stream"."^1.4.7" =
-    self.by-version."concat-stream"."1.5.1";
+    self.by-version."concat-stream"."1.5.2";
   by-spec."content-disposition"."0.5.1" =
     self.by-version."content-disposition"."0.5.1";
   by-version."content-disposition"."0.5.1" = self.buildNodePackage {
@@ -1157,15 +1178,15 @@
     cpu = [ ];
   };
   by-spec."doctrine"."^1.2.2" =
-    self.by-version."doctrine"."1.2.3";
-  by-version."doctrine"."1.2.3" = self.buildNodePackage {
-    name = "doctrine-1.2.3";
-    version = "1.2.3";
+    self.by-version."doctrine"."1.3.0";
+  by-version."doctrine"."1.3.0" = self.buildNodePackage {
+    name = "doctrine-1.3.0";
+    version = "1.3.0";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/doctrine/-/doctrine-1.2.3.tgz";
-      name = "doctrine-1.2.3.tgz";
-      sha1 = "6aec6bbd62cf89dd498cae70c0ed9f49da873a6a";
+      url = "https://registry.npmjs.org/doctrine/-/doctrine-1.3.0.tgz";
+      name = "doctrine-1.3.0.tgz";
+      sha1 = "13e75682b55518424276f7c173783456ef913d26";
     };
     deps = {
       "esutils-2.0.2" = self.by-version."esutils"."2.0.2";
@@ -1541,16 +1562,16 @@
     };
     deps = {
       "chalk-1.1.3" = self.by-version."chalk"."1.1.3";
-      "concat-stream-1.5.1" = self.by-version."concat-stream"."1.5.1";
+      "concat-stream-1.5.2" = self.by-version."concat-stream"."1.5.2";
       "debug-2.2.0" = self.by-version."debug"."2.2.0";
-      "doctrine-1.2.3" = self.by-version."doctrine"."1.2.3";
+      "doctrine-1.3.0" = self.by-version."doctrine"."1.3.0";
       "es6-map-0.1.4" = self.by-version."es6-map"."0.1.4";
       "escope-3.6.0" = self.by-version."escope"."3.6.0";
       "espree-3.1.7" = self.by-version."espree"."3.1.7";
       "estraverse-4.2.0" = self.by-version."estraverse"."4.2.0";
       "esutils-2.0.2" = self.by-version."esutils"."2.0.2";
       "file-entry-cache-1.3.1" = self.by-version."file-entry-cache"."1.3.1";
-      "glob-7.0.5" = self.by-version."glob"."7.0.5";
+      "glob-7.0.6" = self.by-version."glob"."7.0.6";
       "globals-9.9.0" = self.by-version."globals"."9.9.0";
       "ignore-3.1.5" = self.by-version."ignore"."3.1.5";
       "imurmurhash-0.1.4" = self.by-version."imurmurhash"."0.1.4";
@@ -1668,15 +1689,15 @@
     cpu = [ ];
   };
   by-spec."esprima"."^2.6.0" =
-    self.by-version."esprima"."2.7.2";
-  by-version."esprima"."2.7.2" = self.buildNodePackage {
-    name = "esprima-2.7.2";
-    version = "2.7.2";
+    self.by-version."esprima"."2.7.3";
+  by-version."esprima"."2.7.3" = self.buildNodePackage {
+    name = "esprima-2.7.3";
+    version = "2.7.3";
     bin = true;
     src = fetchurl {
-      url = "https://registry.npmjs.org/esprima/-/esprima-2.7.2.tgz";
-      name = "esprima-2.7.2.tgz";
-      sha1 = "f43be543609984eae44c933ac63352a6af35f339";
+      url = "https://registry.npmjs.org/esprima/-/esprima-2.7.3.tgz";
+      name = "esprima-2.7.3.tgz";
+      sha1 = "96e3b70d5779f6ad49cd032673d1c312767ba581";
     };
     deps = {
     };
@@ -2056,18 +2077,18 @@
     cpu = [ ];
   };
   by-spec."form-data"."~1.0.0-rc3" =
-    self.by-version."form-data"."1.0.0-rc4";
-  by-version."form-data"."1.0.0-rc4" = self.buildNodePackage {
-    name = "form-data-1.0.0-rc4";
-    version = "1.0.0-rc4";
+    self.by-version."form-data"."1.0.1";
+  by-version."form-data"."1.0.1" = self.buildNodePackage {
+    name = "form-data-1.0.1";
+    version = "1.0.1";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/form-data/-/form-data-1.0.0-rc4.tgz";
-      name = "form-data-1.0.0-rc4.tgz";
-      sha1 = "05ac6bc22227b43e4461f488161554699d4f8b5e";
+      url = "https://registry.npmjs.org/form-data/-/form-data-1.0.1.tgz";
+      name = "form-data-1.0.1.tgz";
+      sha1 = "ae315db9a4907fa065502304a66d7733475ee37c";
     };
     deps = {
-      "async-1.5.2" = self.by-version."async"."1.5.2";
+      "async-2.0.1" = self.by-version."async"."2.0.1";
       "combined-stream-1.0.5" = self.by-version."combined-stream"."1.0.5";
       "mime-types-2.1.11" = self.by-version."mime-types"."2.1.11";
     };
@@ -2240,15 +2261,15 @@
     cpu = [ ];
   };
   by-spec."glob"."^7.0.3" =
-    self.by-version."glob"."7.0.5";
-  by-version."glob"."7.0.5" = self.buildNodePackage {
-    name = "glob-7.0.5";
-    version = "7.0.5";
+    self.by-version."glob"."7.0.6";
+  by-version."glob"."7.0.6" = self.buildNodePackage {
+    name = "glob-7.0.6";
+    version = "7.0.6";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/glob/-/glob-7.0.5.tgz";
-      name = "glob-7.0.5.tgz";
-      sha1 = "b4202a69099bbb4d292a7c1b95b6682b67ebdc95";
+      url = "https://registry.npmjs.org/glob/-/glob-7.0.6.tgz";
+      name = "glob-7.0.6.tgz";
+      sha1 = "211bafaf49e525b8cd93260d14ab136152b3f57a";
     };
     deps = {
       "fs.realpath-1.0.0" = self.by-version."fs.realpath"."1.0.0";
@@ -2265,7 +2286,7 @@
     cpu = [ ];
   };
   by-spec."glob"."^7.0.5" =
-    self.by-version."glob"."7.0.5";
+    self.by-version."glob"."7.0.6";
   by-spec."globals"."^9.2.0" =
     self.by-version."globals"."9.9.0";
   by-version."globals"."9.9.0" = self.buildNodePackage {
@@ -2299,7 +2320,7 @@
     deps = {
       "array-union-1.0.2" = self.by-version."array-union"."1.0.2";
       "arrify-1.0.1" = self.by-version."arrify"."1.0.1";
-      "glob-7.0.5" = self.by-version."glob"."7.0.5";
+      "glob-7.0.6" = self.by-version."glob"."7.0.6";
       "object-assign-4.1.0" = self.by-version."object-assign"."4.1.0";
       "pify-2.3.0" = self.by-version."pify"."2.3.0";
       "pinkie-promise-2.0.1" = self.by-version."pinkie-promise"."2.0.1";
@@ -2445,7 +2466,7 @@
       sha1 = "0fb3a40537ad5265b6b49413022c60d35b49539a";
     };
     deps = {
-      "concat-stream-1.5.1" = self.by-version."concat-stream"."1.5.1";
+      "concat-stream-1.5.2" = self.by-version."concat-stream"."1.5.2";
       "pump-1.0.1" = self.by-version."pump"."1.0.1";
       "readable-stream-1.1.14" = self.by-version."readable-stream"."1.1.14";
       "xtend-4.0.1" = self.by-version."xtend"."4.0.1";
@@ -2511,7 +2532,7 @@
     deps = {
       "assert-plus-0.2.0" = self.by-version."assert-plus"."0.2.0";
       "jsprim-1.3.0" = self.by-version."jsprim"."1.3.0";
-      "sshpk-1.9.2" = self.by-version."sshpk"."1.9.2";
+      "sshpk-1.10.0" = self.by-version."sshpk"."1.10.0";
     };
     optionalDependencies = {
     };
@@ -2931,7 +2952,7 @@
     };
     deps = {
       "argparse-1.0.7" = self.by-version."argparse"."1.0.7";
-      "esprima-2.7.2" = self.by-version."esprima"."2.7.2";
+      "esprima-2.7.3" = self.by-version."esprima"."2.7.3";
     };
     optionalDependencies = {
     };
@@ -3177,6 +3198,8 @@
   };
   by-spec."lodash"."^4.3.0" =
     self.by-version."lodash"."4.15.0";
+  by-spec."lodash"."^4.8.0" =
+    self.by-version."lodash"."4.15.0";
   by-spec."lru-cache"."2" =
     self.by-version."lru-cache"."2.7.3";
   by-version."lru-cache"."2.7.3" = self.buildNodePackage {
@@ -3291,7 +3314,7 @@
     os = [ ];
     cpu = [ ];
   };
-  by-spec."mime-types"."^2.1.10" =
+  by-spec."mime-types"."^2.1.11" =
     self.by-version."mime-types"."2.1.11";
   by-version."mime-types"."2.1.11" = self.buildNodePackage {
     name = "mime-types-2.1.11";
@@ -3481,7 +3504,7 @@
     };
     deps = {
       "commist-1.0.0" = self.by-version."commist"."1.0.0";
-      "concat-stream-1.5.1" = self.by-version."concat-stream"."1.5.1";
+      "concat-stream-1.5.2" = self.by-version."concat-stream"."1.5.2";
       "end-of-stream-1.1.0" = self.by-version."end-of-stream"."1.1.0";
       "help-me-0.1.0" = self.by-version."help-me"."0.1.0";
       "inherits-2.0.1" = self.by-version."inherits"."2.0.1";
@@ -3490,7 +3513,7 @@
       "mqtt-packet-3.4.7" = self.by-version."mqtt-packet"."3.4.7";
       "readable-stream-1.0.34" = self.by-version."readable-stream"."1.0.34";
       "reinterval-1.1.0" = self.by-version."reinterval"."1.1.0";
-      "websocket-stream-3.2.1" = self.by-version."websocket-stream"."3.2.1";
+      "websocket-stream-3.3.0" = self.by-version."websocket-stream"."3.3.0";
       "xtend-4.0.1" = self.by-version."xtend"."4.0.1";
     };
     optionalDependencies = {
@@ -4340,7 +4363,7 @@
       "combined-stream-1.0.5" = self.by-version."combined-stream"."1.0.5";
       "extend-3.0.0" = self.by-version."extend"."3.0.0";
       "forever-agent-0.6.1" = self.by-version."forever-agent"."0.6.1";
-      "form-data-1.0.0-rc4" = self.by-version."form-data"."1.0.0-rc4";
+      "form-data-1.0.1" = self.by-version."form-data"."1.0.1";
       "har-validator-2.0.6" = self.by-version."har-validator"."2.0.6";
       "hawk-3.1.3" = self.by-version."hawk"."3.1.3";
       "http-signature-1.1.1" = self.by-version."http-signature"."1.1.1";
@@ -4474,7 +4497,7 @@
       sha1 = "96800093cbf1a0c86bd95b4625467535c29dfa04";
     };
     deps = {
-      "glob-7.0.5" = self.by-version."glob"."7.0.5";
+      "glob-7.0.6" = self.by-version."glob"."7.0.6";
     };
     optionalDependencies = {
     };
@@ -4692,15 +4715,15 @@
     cpu = [ ];
   };
   by-spec."sshpk"."^1.7.0" =
-    self.by-version."sshpk"."1.9.2";
-  by-version."sshpk"."1.9.2" = self.buildNodePackage {
-    name = "sshpk-1.9.2";
-    version = "1.9.2";
+    self.by-version."sshpk"."1.10.0";
+  by-version."sshpk"."1.10.0" = self.buildNodePackage {
+    name = "sshpk-1.10.0";
+    version = "1.10.0";
     bin = true;
     src = fetchurl {
-      url = "https://registry.npmjs.org/sshpk/-/sshpk-1.9.2.tgz";
-      name = "sshpk-1.9.2.tgz";
-      sha1 = "3b41351bbad5c34ddf4bd8119937efee31a46765";
+      url = "https://registry.npmjs.org/sshpk/-/sshpk-1.10.0.tgz";
+      name = "sshpk-1.10.0.tgz";
+      sha1 = "104d6ba2afb2ac099ab9567c0d193977f29c6dfa";
     };
     deps = {
       "asn1-0.2.3" = self.by-version."asn1"."0.2.3";
@@ -4713,6 +4736,7 @@
       "tweetnacl-0.13.3" = self.by-version."tweetnacl"."0.13.3";
       "jodid25519-1.0.2" = self.by-version."jodid25519"."1.0.2";
       "ecc-jsbn-0.1.1" = self.by-version."ecc-jsbn"."0.1.1";
+      "bcrypt-pbkdf-1.0.0" = self.by-version."bcrypt-pbkdf"."1.0.0";
     };
     peerDependencies = [];
     os = [ ];
@@ -4926,7 +4950,7 @@
       sha1 = "b424433ef596851922b2fd77224a69a1951618eb";
     };
     deps = {
-      "bluebird-3.4.1" = self.by-version."bluebird"."3.4.1";
+      "bluebird-3.4.6" = self.by-version."bluebird"."3.4.6";
       "chalk-1.1.3" = self.by-version."chalk"."1.1.3";
       "lodash-4.15.0" = self.by-version."lodash"."4.15.0";
       "slice-ansi-0.0.4" = self.by-version."slice-ansi"."0.0.4";
@@ -5116,6 +5140,25 @@
     os = [ ];
     cpu = [ ];
   };
+  by-spec."tweetnacl"."^0.14.3" =
+    self.by-version."tweetnacl"."0.14.3";
+  by-version."tweetnacl"."0.14.3" = self.buildNodePackage {
+    name = "tweetnacl-0.14.3";
+    version = "0.14.3";
+    bin = false;
+    src = fetchurl {
+      url = "https://registry.npmjs.org/tweetnacl/-/tweetnacl-0.14.3.tgz";
+      name = "tweetnacl-0.14.3.tgz";
+      sha1 = "3da382f670f25ded78d7b3d1792119bca0b7132d";
+    };
+    deps = {
+    };
+    optionalDependencies = {
+    };
+    peerDependencies = [];
+    os = [ ];
+    cpu = [ ];
+  };
   by-spec."tweetnacl"."~0.13.0" =
     self.by-version."tweetnacl"."0.13.3";
   by-version."tweetnacl"."0.13.3" = self.buildNodePackage {
@@ -5233,6 +5276,26 @@
     os = [ ];
     cpu = [ ];
   };
+  by-spec."urijs"."1.16.1" =
+    self.by-version."urijs"."1.16.1";
+  by-version."urijs"."1.16.1" = self.buildNodePackage {
+    name = "urijs-1.16.1";
+    version = "1.16.1";
+    bin = false;
+    src = fetchurl {
+      url = "https://registry.npmjs.org/urijs/-/urijs-1.16.1.tgz";
+      name = "urijs-1.16.1.tgz";
+      sha1 = "859ad31890f5f9528727be89f1932c94fb4731e2";
+    };
+    deps = {
+    };
+    optionalDependencies = {
+    };
+    peerDependencies = [];
+    os = [ ];
+    cpu = [ ];
+  };
+  "urijs" = self.by-version."urijs"."1.16.1";
   by-spec."url-parse"."1.1.1" =
     self.by-version."url-parse"."1.1.1";
   by-version."url-parse"."1.1.1" = self.buildNodePackage {
@@ -5373,15 +5436,15 @@
     cpu = [ ];
   };
   by-spec."websocket-stream"."^3.0.1" =
-    self.by-version."websocket-stream"."3.2.1";
-  by-version."websocket-stream"."3.2.1" = self.buildNodePackage {
-    name = "websocket-stream-3.2.1";
-    version = "3.2.1";
+    self.by-version."websocket-stream"."3.3.0";
+  by-version."websocket-stream"."3.3.0" = self.buildNodePackage {
+    name = "websocket-stream-3.3.0";
+    version = "3.3.0";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/websocket-stream/-/websocket-stream-3.2.1.tgz";
-      name = "websocket-stream-3.2.1.tgz";
-      sha1 = "344629940eb8efd580fed0fde6d0617b44222335";
+      url = "https://registry.npmjs.org/websocket-stream/-/websocket-stream-3.3.0.tgz";
+      name = "websocket-stream-3.3.0.tgz";
+      sha1 = "69ced776afca68688ed5be73d28511a2c329c8ed";
     };
     deps = {
       "duplexify-3.4.5" = self.by-version."duplexify"."3.4.5";
