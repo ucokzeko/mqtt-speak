@@ -47,9 +47,9 @@ client.on('message', (topic, rawMessage) => {
       const fileName = path.basename(filePath);
       const audioUrl = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
       const toPublish = JSON.stringify({
-        url: audioUrl,
-        name: fileName,
-        time: playTime,
+        url:      audioUrl,
+        name:     fileName,
+        time:     playTime,
         location: ['kitchen', 'lounge']
       });
       client.publish(consts.playTopic, toPublish, consts.qos);
