@@ -1,6 +1,6 @@
 # mqtt-speak
 
-Node app that listens to MQTT queue on specific topic (can be found in `./src/config.json`) and it will process the string message to either create an audio file using a TTS service and save it locally to specific path or (if exists) just publish an audio path back to MQTT queue
+Node app that listens to MQTT queue on specific topic (can be found in `./src/support/constants.js`) and it will process the string message to create an audio file using a TTS service and, if it does not already exist, save it locally to specific path which is being served. Mqtt-speak will then publish a url for this file and a time at which it should be played to the MQTT queue on the topic `play/all` found in `./src/support/constants.js`
 
 ### Setup Basics
 - `git clone https://github.com/ucokzeko/mqtt-play.git`
