@@ -10,7 +10,7 @@ const TTSProcessor = require('./module/tts-processor.js');
 const client = mqtt.connect(consts.mqttHost);
 
 const express = require('express');
-const app = express();
+const app     = express();
 
 app.set('port', consts.ttsCacheServePort);
 
@@ -39,13 +39,13 @@ client.on('message', (topic, rawMessage) => {
   const message = rawMessage.toString();
   try {
     const playTimeMilli = Number(new Date().getTime()) + consts.playDelay;
-    const playTime = new Date(playTimeMilli).toISOString();
-    const toSpeak = JSON.parse(message).message;
+    const playTime      = new Date(playTimeMilli).toISOString();
+    const toSpeak       = JSON.parse(message).message;
     winston.info(`Message received: '${message}'`);
     new TTSProcessor(toSpeak, consts.audioPath)
     .then((filePath) => {
-      const fileName = path.basename(filePath);
-      const audioUrl = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
+      const fileName  = path.basename(filePath);
+      const audioUrl  = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
       const toPublish = JSON.stringify({
         url:      audioUrl,
         name:     fileName,
