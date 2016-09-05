@@ -12,7 +12,7 @@ const client = mqtt.connect(consts.mqttHost);
 const express = require('express');
 const app     = express();
 
-app.set('port', consts.ttsCacheServePort);
+app.set('port', consts.ttsCacheServerPort);
 
 winston.info(`Audio path:       ${consts.audioPath}`);
 winston.info(`Subscribed topic: ${consts.speakTopic}`);
@@ -66,7 +66,7 @@ client.on('message', (topic, rawMessage) => {
 function buildDownloadUrl(downloadPath) {
   const url = uri({
     protocol: 'http',
-    hostname: `${consts.hostname}:${consts.ttsCacheServePort}`,
+    hostname: `${consts.hostname}:${consts.ttsCacheServerPort}`,
     path:     downloadPath
   });
   return url.toString();
