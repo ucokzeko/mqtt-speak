@@ -11,15 +11,19 @@ function envOrBust(varName) {
 
 function getHostname() {
   let value;
-  const ifaces = os.networkInterfaces();
-  Object.keys(ifaces).forEach((ifname) => {
-    ifaces[ifname].forEach((iface) => {
-      if (iface.family !== 'IPv4' || iface.internal) {
-        return;
-      }
-      value = iface.address;
+  try {
+    const ifaces = os.networkInterfaces();
+    Object.keys(ifaces).forEach((ifname) => {
+      ifaces[ifname].forEach((iface) => {
+        if (iface.family !== 'IPv4' || iface.internal) {
+          return;
+        }
+        value = iface.address;
+      });
     });
-  });
+  } catch (error) {
+    if (error.code === 'EPROTONOSUPPORT') { value = '127.0.0.1' }
+  }
   return value;
 }
 

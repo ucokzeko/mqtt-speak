@@ -17,6 +17,7 @@ app.set('port', consts.ttsCacheServerPort);
 winston.info(`Audio path:       ${consts.audioPath}`);
 winston.info(`Subscribed topic: ${consts.speakTopic}`);
 winston.info(`Published topic:  ${consts.playTopic}`);
+winston.info(`Hostname:         ${consts.hostname}`);
 
 client.on('connect', () => {
   winston.info('Connected to MQTT Broker. Awaiting messages.');
