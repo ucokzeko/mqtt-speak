@@ -36,7 +36,6 @@
   "scripts": {
     "start": "node --use_strict ./src/app.js",
     "unitTests": "mocha --use_strict ./test/unit/",
-    "integrationTests": "node --use_strict ./test/integration/index.js",
     "lint": "eslint src"
   }
 }

@@ -33,8 +33,13 @@ function getHostname() {
 
 const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
 const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
-const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 const ttsCacheServerPort  = envOrBust('TTS_CACHE_SERVER_PORT');
+let detoxCentralAddress   = envOrBust('DETOX_CENTRAL_ADDRESS');
+
+if (process.env.INTEGRATION_TESTING) {
+  detoxCentralAddress = 'http://localhost:3001';
+}
+
 
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';

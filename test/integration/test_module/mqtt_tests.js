@@ -16,7 +16,7 @@ describe('MQTT', () => {
 
   describe('MQTT#publish message', () => {
     it('should not throw error when message contains only alphabetic characters', (done) => {
-      const message  = 'This is test audio';
+      const message  = 'This is a test audio';
       const filename = processor.__get__('getMD5String')(message);
 
       winston.info(`Publishing message to topic ${topic}`);
@@ -29,28 +29,11 @@ describe('MQTT', () => {
           error
         );
         done();
-      }, 1000 * 1);
-    });
-
-    it('should not throw error when message contains combination alphabetic and numeric characters', (done) => {
-      const message  = 'Test 123';
-      const filename = processor.__get__('getMD5String')(message);
-
-      winston.info(`Publishing message to topic ${topic}`);
-      client.publish(topic, formatMqttMessage(message), mqttConfig);
-
-      setTimeout(() => {
-        assert.doesNotThrow(() => {
-          isFileCreated(`${consts.audioPath}${filename}.mp3`);
-        }, (error) =>
-          error
-        );
-        done();
-      }, 1000 * 1);
-    });
+      }, 1000 * 3);
+    }).timeout(5000);
 
     it('should not throw error when sending repeated message', (done) => {
-      const message  = 'Test 123';
+      const message  = 'This is a test audio';
       const filename = processor.__get__('getMD5String')(message);
 
       winston.info(`Publishing message to topic ${topic}`);
@@ -63,8 +46,8 @@ describe('MQTT', () => {
           error
         );
         done();
-      }, 1000 * 1);
-    });
+      }, 1000 * 3);
+    }).timeout(5000);
   });
 });
 
