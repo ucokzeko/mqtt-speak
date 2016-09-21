@@ -22,7 +22,11 @@ function getHostname() {
       });
     });
   } catch (error) {
-    if (error.code === 'EPROTONOSUPPORT') { value = '127.0.0.1'; }
+    if (error.code === 'EPROTONOSUPPORT') {
+      value = '127.0.0.1';
+    } else {
+      throw error;
+    }
   }
   return value;
 }
