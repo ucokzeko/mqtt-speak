@@ -3,7 +3,6 @@
 
 let
   pkg = pkgs.callPackage mqtt-speak {};
-  buildTools = pkgs.callPackage ./build_scripts/build.nix { doNotBrowsify = ["request"];};
 in rec {
   inherit (pkg) tarball;
 
@@ -13,7 +12,7 @@ in rec {
       [ -e ${test} ]
     '';
     doCheck = true;
-  }) // buildTools.detoxNodePackage pkg;
+  });
 
   test = pkgs.lib.overrideDerivation pkg.dev (o: {
     name = "${o.name}-test";
