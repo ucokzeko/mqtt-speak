@@ -2,7 +2,7 @@ const rewire  = require('rewire');
 const assert  = require('assert');
 const request = require('request');
 
-describe('URL builder', () => {
+describe('mqtt-speak', () => {
   const tts  = rewire('../../../src/module/detox-central-tts.js');
 
   describe('URL builder#url request', () => {
