@@ -11,22 +11,35 @@ function envOrBust(varName) {
 
 function getHostname() {
   let value;
-  const ifaces = os.networkInterfaces();
-  Object.keys(ifaces).forEach((ifname) => {
-    ifaces[ifname].forEach((iface) => {
-      if (iface.family !== 'IPv4' || iface.internal) {
-        return;
-      }
-      value = iface.address;
+  try {
+    const ifaces = os.networkInterfaces();
+    Object.keys(ifaces).forEach((ifname) => {
+      ifaces[ifname].forEach((iface) => {
+        if (iface.family !== 'IPv4' || iface.internal) {
+          return;
+        }
+        value = iface.address;
+      });
     });
-  });
+  } catch (error) {
+    if (error.code === 'EPROTONOSUPPORT') {
+      value = '127.0.0.1';
+    } else {
+      throw error;
+    }
+  }
   return value;
 }
 
 const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
 const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
-const detoxCentralAddress = envOrBust('DETOX_CENTRAL_ADDRESS');
 const ttsCacheServerPort  = envOrBust('TTS_CACHE_SERVER_PORT');
+let detoxCentralAddress   = envOrBust('DETOX_CENTRAL_ADDRESS');
+
+if (process.env.INTEGRATION_TESTING) {
+  detoxCentralAddress = 'http://localhost:3001';
+}
+
 
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';
