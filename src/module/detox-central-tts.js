@@ -10,13 +10,11 @@ function fetch(message, path) {
     request.post(buildURL('tts'), { json: { message } }, (err, response, body) => {
       if (err) {
         reject(err);
+      } else if (response.statusCode === 200 || response.statusCode === 201) {
+        const downloadUrl = buildURL(body.relative_url);
+        downloadAudioFile(downloadUrl, path).then((audioPath) => { fulfill(audioPath); }, reject);
       } else {
-        if (response.statusCode === 200 || response.statusCode === 201) {
-          const downloadUrl = buildURL(body.relative_url);
-          downloadAudioFile(downloadUrl, path).then((audioPath) => { fulfill(audioPath); }, reject);
-        } else {
-          reject(new Error(`Response is unexpected! ${response.statusCode} : ${body}`));
-        }
+        reject(new Error(`Response is unexpected! ${response.statusCode} : ${body}`));
       }
     });
   });
@@ -33,18 +31,16 @@ function downloadAudioFile(url, path) {
     request(url, { encoding: 'binary' }, (error, response, body) => {
       if (error) {
         reject(error);
+      } else if (response.statusCode === 200) {
+        fs.writeFile(path, body, 'binary', (err) => {
+          if (err) {
+            reject(err);
+          }
+          winston.info(`Audio file saved to ${path}`);
+          fulfill(path);
+        });
       } else {
-        if (response.statusCode === 200) {
-          fs.writeFile(path, body, 'binary', (err) => {
-            if (err) {
-              reject(err);
-            }
-            winston.info(`Audio file saved to ${path}`);
-            fulfill(path);
-          });
-        } else {
-          reject(error);
-        }
+        reject(error);
       }
     });
   });
