@@ -7,7 +7,7 @@ const path    = require('path');
 
 const consts = require('../../../src/support/constants');
 
-const prefixTone = path.join(__dirname, '../../..', '/src/support/audio/notify.mp3');
+const prefixTone = path.join(__dirname, '../../..', '/test/integration/audio/prefix.mp3');
 const client = mqtt.connect(consts.mqttHost);
 const mqttConfig = { qos: 1 };
 
