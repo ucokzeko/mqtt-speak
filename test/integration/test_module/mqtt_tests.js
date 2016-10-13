@@ -3,11 +3,12 @@ const mqtt    = require('mqtt');
 const rewire  = require('rewire');
 const assert  = require('assert');
 const winston = require('winston');
+const path    = require('path');
 
 const consts = require('../../../src/support/constants');
 
+const prefixTone = path.join(__dirname, '../../..', '/src/support/audio/notify.mp3');
 const client = mqtt.connect(consts.mqttHost);
-
 const mqttConfig = { qos: 1 };
 
 describe('MQTT', () => {
@@ -15,6 +16,11 @@ describe('MQTT', () => {
   const processor = rewire('../../../src/module/tts-processor.js');
 
   describe('MQTT#publish message', () => {
+    let prefixHash;
+    before(() => processor.__get__('getMD5File')(prefixTone).then((hash) => {
+      prefixHash = hash.read();
+    }));
+
     it('should not throw error when message contains only alphabetic characters', (done) => {
       const message  = 'This is a test audio';
       const filename = processor.__get__('getMD5String')(message);
@@ -24,7 +30,8 @@ describe('MQTT', () => {
 
       setTimeout(() => {
         assert.doesNotThrow(() => {
-          isFileCreated(`${consts.audioPath}${filename}.mp3`);
+          fileExists(`${consts.audioPath}${filename}.mp3`);
+          fileExists(`${consts.audioPath}${prefixHash}${filename}.mp3`);
         }, (error) =>
           error
         );
@@ -41,7 +48,8 @@ describe('MQTT', () => {
 
       setTimeout(() => {
         assert.doesNotThrow(() => {
-          isFileCreated(`${consts.audioPath}${filename}.mp3`);
+          fileExists(`${consts.audioPath}${filename}.mp3`);
+          fileExists(`${consts.audioPath}${prefixHash}${filename}.mp3`);
         }, (error) =>
           error
         );
@@ -51,8 +59,8 @@ describe('MQTT', () => {
   });
 });
 
-function isFileCreated(path) {
-  const stats = fs.lstatSync(path);
+function fileExists(filePath) {
+  const stats = fs.lstatSync(filePath);
   return stats.isFile();
 }
 
