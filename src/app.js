@@ -5,7 +5,7 @@ const uri     = require('urijs');
 const path    = require('path');
 
 const consts       = require('./support/constants');
-const TTSProcessor = require('./module/tts-processor.js');
+const TTSProcessor = require('./module/tts-processor');
 
 const client = mqtt.connect(consts.mqttHost);
 
