@@ -31,6 +31,8 @@ function getHostname() {
   return value;
 }
 
+const prefixTone          = envOrBust('PREFIX_TONE_FILE');
+const soxCommand          = envOrBust('SOX_COMMAND');
 const audioPath           = envOrBust('SPEAK_AUDIO_PATH');
 const mqttHost            = envOrBust('MOSQUITTO_ADDRESS');
 const ttsCacheServerPort  = envOrBust('TTS_CACHE_SERVER_PORT');
@@ -49,12 +51,14 @@ const hostname     = getHostname();
 const playDelay    = 2000;
 
 module.exports = {
+  prefixTone,
   speakTopic,
   playTopic,
   qos,
   hostname,
   playDelay,
   ttsCacheServerPort,
+  soxCommand,
   audioPath,
   audioURLPath,
   mqttHost,
