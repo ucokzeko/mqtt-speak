@@ -27,12 +27,13 @@ in mkService {
     then
       echo '$PREFIX_TONE_FILE found.'
     else
-      cp ${mqttSpeakDir}/src/support/audio/notify.mp3 $PREFIX_TONE_FILE
+      cp ${mqttSpeakDir}/audio-files/notify.mp3 $PREFIX_TONE_FILE
       chown ${user.name}: $PREFIX_TONE_FILE
     fi
   '';
 
   script = ''
-    exec ${nodejs}/bin/node --use_strict ${mqtt-speak.build}/lib/node_modules/mqtt-speak/src/app.js
+    cd ${mqttSpeakDir}
+    exec ${nodejs}/bin/node --use_strict ${mqttSpeakDir}/dist/app.js
   '';
 }

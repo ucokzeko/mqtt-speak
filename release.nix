@@ -3,16 +3,20 @@
 
 let
   pkg = pkgs.callPackage mqtt-speak {};
+  buildTools = pkgs.callPackage ./build_scripts/build.nix { doNotBrowsify = ["request"]; doNotDelete = ["audio-files"]; };
 in rec {
   inherit (pkg) tarball;
 
-  build = pkgs.lib.overrideDerivation pkg.build (o: {
+  customBuild = pkgs.lib.overrideDerivation pkg.build (o: {
     # Can't just test here because we don't have devDependencies
     checkPhase = ''
       [ -e ${test} ]
     '';
     doCheck = true;
   });
+
+  build = customBuild // buildTools.detoxNodePackage pkg;
+
 
   test = pkgs.lib.overrideDerivation pkg.dev (o: {
     name = "${o.name}-test";
