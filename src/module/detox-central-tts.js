@@ -1,16 +1,17 @@
-const fs      = require('fs');
+const auth    = require('detox-node-service-auth-module');
+const parse   = require('url-parse');
 const winston = require('winston');
 const request = require('request');
-const parse   = require('url-parse');
 const util    = require('util');
+const fs      = require('fs');
 
-const consts = require('../support/constants');
-const auth   = require('detox-node-service-auth-module');
+const consts  = require('../support/constants');
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
     auth.getCentralOptions
     .then((centralOptions) => {
+      // copy options for reuse when downloading file
       const options  = Object.assign({}, centralOptions);
       options.json   = { message };
       options.url    = buildURL('tts');
