@@ -3,7 +3,7 @@
 
 let
   pkg = pkgs.callPackage mqtt-speak {};
-  buildTools = pkgs.callPackage ./build_scripts/build.nix { doNotBrowsify = ["request"]; doNotDelete = ["audio-files"]; };
+  buildTools = pkgs.callPackage ./build_scripts/build.nix { doNotBrowsify = ["request" "express"]; doNotDelete = ["audio-files"]; };
 in rec {
   inherit (pkg) tarball;
 
