@@ -1,8 +1,8 @@
 const fs       = require('fs');
 const crypto   = require('crypto');
 const execFile = require('child_process').execFile;
-const consts   = require('../support/constants');
 
+const consts      = require('../support/constants');
 const ttsProvider = require('./detox-central-tts');
 
 function TTSProcessor(message, outputRoot) {
@@ -34,7 +34,6 @@ function getMD5File(file) {
     const fd = fs.createReadStream(file);
     const hash = crypto.createHash('md5');
     hash.setEncoding('hex');
-
     fd.on('end', () => {
       hash.end();
       fulfill(hash);
