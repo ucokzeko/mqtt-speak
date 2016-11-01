@@ -16,7 +16,7 @@ app.get('/test', (req, res) => {
   res.send('Up');
 });
 
-app.use(express.static(`${__dirname}/audio`));
+app.use(express.static('test/integration/audio'));
 
 app.listen(port);
 

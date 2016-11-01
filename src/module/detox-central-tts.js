@@ -21,14 +21,21 @@ function fetch(message, path) {
           reject(err);
         } else if (response.statusCode === 200 || response.statusCode === 201) {
           const downloadUrl = buildURL(body.relative_url);
-          downloadAudioFile(centralOptions, downloadUrl, path).then((audioPath) => {
+          downloadAudioFile(centralOptions, downloadUrl, path)
+          .then((audioPath) => {
             winston.info(`Downloaded Audio: ${downloadUrl}, Path: ${path}`);
             fulfill(audioPath);
-          }, reject);
+          })
+          .catch((error) => {
+            reject(error);
+          });
         } else {
           reject(new Error(`Response is unexpected! ${response.statusCode} : ${util.inspect(body)}`));
         }
       });
+    })
+    .catch((err) => {
+      reject(err);
     });
   });
 }
