@@ -9,7 +9,7 @@ const consts  = require('../support/constants');
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
-    auth.getCentralOptions
+    auth.getCentralOptions()
     .then((centralOptions) => {
       // copy options for reuse when downloading file
       const options  = Object.assign({}, centralOptions);
