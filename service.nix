@@ -1,4 +1,4 @@
-{mkService, callPackage, nodejs, sox, lame, mqtt-speak ? callPackage ./release.nix {}, mosquitto}:
+{mkService, callPackage, nodejs, sox, lame, mqtt-speak ? callPackage ./release.nix {}, mosquitto, detox-api }:
 
 let
   user.name = "mqtt-speak";
@@ -7,7 +7,7 @@ let
 in mkService {
   inherit user;
   name = "mqtt-speak";
-  dependsOn = [ mosquitto ];
+  dependsOn = [ mosquitto detox-api ];
   environment = {
     SOX_COMMAND = "${sox.override { inherit lame; enableLame = true; }}/bin/sox";
     SPEAK_AUDIO_PATH = "${user.home}/audio-files/";
