@@ -17,7 +17,6 @@ in rec {
 
   build = customBuild // buildTools.detoxNodePackage pkg;
 
-
   test = pkgs.lib.overrideDerivation pkg.dev (o: {
     name = "${o.name}-test";
     checkPhase = ''
