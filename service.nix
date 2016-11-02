@@ -1,4 +1,4 @@
-{mkService, callPackage, nodejs, sox, lame, mqtt-speak ? callPackage ./release.nix {}, mosquitto}:
+{mkService, callPackage, nodejs, sox, lame, mqtt-speak ? callPackage ./release.nix {}, mosquitto, detox-api }:
 
 let
   user.name = "mqtt-speak";
@@ -7,7 +7,7 @@ let
 in mkService {
   inherit user;
   name = "mqtt-speak";
-  dependsOn = [ mosquitto ];
+  dependsOn = [ mosquitto detox-api ];
   environment = {
     SOX_COMMAND = "${sox.override { inherit lame; enableLame = true; }}/bin/sox";
     SPEAK_AUDIO_PATH = "${user.home}/audio-files/";
@@ -27,12 +27,13 @@ in mkService {
     then
       echo '$PREFIX_TONE_FILE found.'
     else
-      cp ${mqttSpeakDir}/src/support/audio/notify.mp3 $PREFIX_TONE_FILE
+      cp ${mqttSpeakDir}/audio-files/notify.mp3 $PREFIX_TONE_FILE
       chown ${user.name}: $PREFIX_TONE_FILE
     fi
   '';
 
   script = ''
-    exec ${nodejs}/bin/node --use_strict ${mqtt-speak.build}/lib/node_modules/mqtt-speak/src/app.js
+    cd ${mqttSpeakDir}
+    exec ${nodejs}/bin/node --use_strict ${mqttSpeakDir}/dist/app.js
   '';
 }

@@ -1,5 +1,5 @@
 const auth    = require('detox-node-service-auth-module');
-const parse   = require('url-parse');
+const url     = require('url');
 const winston = require('winston');
 const request = require('request');
 const util    = require('util');
@@ -9,7 +9,7 @@ const consts  = require('../support/constants');
 
 function fetch(message, path) {
   return new Promise((fulfill, reject) =>  {
-    auth.getCentralOptions
+    auth.getCentralOptions()
     .then((centralOptions) => {
       // copy options for reuse when downloading file
       const options  = Object.assign({}, centralOptions);
@@ -21,26 +21,36 @@ function fetch(message, path) {
           reject(err);
         } else if (response.statusCode === 200 || response.statusCode === 201) {
           const downloadUrl = buildURL(body.relative_url);
-          downloadAudioFile(centralOptions, downloadUrl, path).then((audioPath) => { fulfill(audioPath); }, reject);
+          downloadAudioFile(centralOptions, downloadUrl, path)
+          .then((audioPath) => {
+            winston.info(`Downloaded Audio: ${downloadUrl}, Path: ${path}`);
+            fulfill(audioPath);
+          })
+          .catch((error) => {
+            reject(error);
+          });
         } else {
           reject(new Error(`Response is unexpected! ${response.statusCode} : ${util.inspect(body)}`));
         }
       });
+    })
+    .catch((err) => {
+      reject(err);
     });
   });
 }
 
 function buildURL(path) {
-  const url = parse(consts.detoxCentralAddress, true);
-  url.set('pathname', `/${path}`);
-  return url.toString();
+  const reqUrl = url.parse(consts.detoxCentralAddress);
+  reqUrl.pathname = path;
+  return reqUrl.format();
 }
 
-function downloadAudioFile(options, url, path) {
+function downloadAudioFile(options, downloadUrl, path) {
   return new Promise((fulfill, reject) => {
     const requestOptions    = options;
     requestOptions.encoding = 'binary';
-    request(url, requestOptions, (error, response, body) => {
+    request(downloadUrl, requestOptions, (error, response, body) => {
       if (error) {
         reject(error);
       } else if (response.statusCode === 200) {

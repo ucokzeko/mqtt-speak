@@ -5,6 +5,7 @@ function init() {
   process.env.TTS_CACHE_SERVER_PORT = '1234';
   process.env.SOX_COMMAND           = 'sox';
   process.env.PREFIX_TONE_FILE      = './';
+  process.env.DETOX_API_ADDRESS     = 'http://localhost:2999';
 }
 
 module.exports = {

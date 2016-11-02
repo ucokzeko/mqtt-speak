@@ -25,7 +25,7 @@ describe('MQTT', () => {
       const message  = 'This is a test audio';
       const filename = processor.__get__('getMD5String')(message);
 
-      winston.info(`Publishing message to topic ${topic}`);
+      winston.info(`Publishing message to topic ${topic}, DetoxCentral: ${consts.detoxCentralAddress}`);
       client.publish(topic, formatMqttMessage(message), mqttConfig);
 
       setTimeout(() => {

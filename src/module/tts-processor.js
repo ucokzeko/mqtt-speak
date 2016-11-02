@@ -1,8 +1,8 @@
 const fs       = require('fs');
 const crypto   = require('crypto');
 const execFile = require('child_process').execFile;
-const consts   = require('../support/constants');
 
+const consts      = require('../support/constants');
 const ttsProvider = require('./detox-central-tts');
 
 function TTSProcessor(message, outputRoot) {
@@ -11,22 +11,18 @@ function TTSProcessor(message, outputRoot) {
 
   return new Promise((fulfill, reject) => {
     getSpeakAudio(message, speakPath)
-    .then(() => getMD5File(consts.prefixTone))
-    .then((hash) => {
-      const outputPath = `${outputRoot}${hash.read()}${speakHash}.mp3`;
-      return getPrefixedSpeakAudio(speakPath, outputPath);
-    })
-    .then((audioPath) => {
-      fulfill(audioPath);
-    })
-    .catch((err) => {
-      reject(err);
-    });
+      .then(() => getMD5File(consts.prefixTone))
+      .then((hash) => {
+        const outputPath = `${outputRoot}${hash.read()}${speakHash}.mp3`;
+        return getPrefixedSpeakAudio(speakPath, outputPath);
+      })
+      .then((audioPath) => {
+        fulfill(audioPath);
+      })
+      .catch((err) => {
+        reject(err);
+      });
   });
-}
-
-function getMD5String(text) {
-  return crypto.createHash('md5').update(text).digest('hex');
 }
 
 function getMD5File(file) {
@@ -34,7 +30,6 @@ function getMD5File(file) {
     const fd = fs.createReadStream(file);
     const hash = crypto.createHash('md5');
     hash.setEncoding('hex');
-
     fd.on('end', () => {
       hash.end();
       fulfill(hash);
@@ -44,13 +39,21 @@ function getMD5File(file) {
   });
 }
 
+function getMD5String(text) {
+  return crypto.createHash('md5').update(text).digest('hex');
+}
+
 function getSpeakAudio(message, speakPath) {
   return new Promise((fulfill, reject) => {
     fs.stat(speakPath, (err) => {
       if (err) {
-        ttsProvider.fetch(message, speakPath).then((audioPath) => {
-          fulfill(audioPath);
-        }, reject);
+        ttsProvider.fetch(message, speakPath)
+          .then((audioPath) => {
+            fulfill(audioPath);
+          })
+          .catch((error) => {
+            reject(error);
+          });
       } else {
         fulfill(speakPath);
       }

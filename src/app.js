@@ -54,7 +54,8 @@ client.on('message', (topic, rawMessage) => {
       });
       client.publish(consts.playTopic, toPublish, consts.qos);
       winston.info(`Published audio URL: ${audioUrl}\nTo be played at: ${playTime}`);
-    }, (error) => {
+    })
+    .catch((error) => {
       winston.error(error);
     });
   } catch (e) {
