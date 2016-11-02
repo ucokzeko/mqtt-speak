@@ -348,7 +348,7 @@
       sha1 = "612a4ab45ef42a70cde806bad86ee6db047e8385";
     };
     deps = {
-      "lodash-4.16.4" = self.by-version."lodash"."4.16.4";
+      "lodash-4.16.6" = self.by-version."lodash"."4.16.6";
     };
     optionalDependencies = {
     };
@@ -1032,26 +1032,6 @@
     os = [ ];
     cpu = [ ];
   };
-  by-spec."crypto-js"."3.1.6" =
-    self.by-version."crypto-js"."3.1.6";
-  by-version."crypto-js"."3.1.6" = self.buildNodePackage {
-    name = "crypto-js-3.1.6";
-    version = "3.1.6";
-    bin = false;
-    src = fetchurl {
-      url = "https://registry.npmjs.org/crypto-js/-/crypto-js-3.1.6.tgz";
-      name = "crypto-js-3.1.6.tgz";
-      sha1 = "6142651b232dbb8ebdfa9716a70a2888359da6c9";
-    };
-    deps = {
-    };
-    optionalDependencies = {
-    };
-    peerDependencies = [];
-    os = [ ];
-    cpu = [ ];
-  };
-  "crypto-js" = self.by-version."crypto-js"."3.1.6";
   by-spec."cycle"."1.0.x" =
     self.by-version."cycle"."1.0.3";
   by-version."cycle"."1.0.3" = self.buildNodePackage {
@@ -1247,8 +1227,8 @@
     bin = false;
     src = fetchgit {
       url = "ssh://git@github.com/dstil/detox-node-service-auth-module.git";
-      rev = "1b155ad272e32ac0bd1d52ff33f6fad1403344fc";
-      sha256 = "165l8gs908rl74sm5rbzbg9qzkgn07cglkmzxaxvp3qvlglymljb";
+      rev = "876184e59b5d4aea1ceea31f19422d61e98f55f9";
+      sha256 = "0s613f50jmwwsxxs6v6wpszbvjzjpm17dr3z4vdl3d9hqsy995np";
     };
     deps = {
       "request-2.76.0" = self.by-version."request"."2.76.0";
@@ -1684,7 +1664,7 @@
       "js-yaml-3.6.1" = self.by-version."js-yaml"."3.6.1";
       "json-stable-stringify-1.0.1" = self.by-version."json-stable-stringify"."1.0.1";
       "levn-0.3.0" = self.by-version."levn"."0.3.0";
-      "lodash-4.16.4" = self.by-version."lodash"."4.16.4";
+      "lodash-4.16.6" = self.by-version."lodash"."4.16.6";
       "mkdirp-0.5.1" = self.by-version."mkdirp"."0.5.1";
       "optionator-0.8.2" = self.by-version."optionator"."0.8.2";
       "path-is-absolute-1.0.1" = self.by-version."path-is-absolute"."1.0.1";
@@ -2788,7 +2768,7 @@
       "cli-cursor-1.0.2" = self.by-version."cli-cursor"."1.0.2";
       "cli-width-2.1.0" = self.by-version."cli-width"."2.1.0";
       "figures-1.7.0" = self.by-version."figures"."1.7.0";
-      "lodash-4.16.4" = self.by-version."lodash"."4.16.4";
+      "lodash-4.16.6" = self.by-version."lodash"."4.16.6";
       "readline2-1.0.1" = self.by-version."readline2"."1.0.1";
       "run-async-0.1.0" = self.by-version."run-async"."0.1.0";
       "rx-lite-3.1.2" = self.by-version."rx-lite"."3.1.2";
@@ -2975,7 +2955,7 @@
       sha1 = "8df57c61ea2e3c501408d100fb013cf8d6e0cc62";
     };
     deps = {
-      "tryit-1.0.2" = self.by-version."tryit"."1.0.2";
+      "tryit-1.0.3" = self.by-version."tryit"."1.0.3";
     };
     optionalDependencies = {
     };
@@ -3347,15 +3327,15 @@
   by-spec."levn"."~0.3.0" =
     self.by-version."levn"."0.3.0";
   by-spec."lodash"."^4.0.0" =
-    self.by-version."lodash"."4.16.4";
-  by-version."lodash"."4.16.4" = self.buildNodePackage {
-    name = "lodash-4.16.4";
-    version = "4.16.4";
+    self.by-version."lodash"."4.16.6";
+  by-version."lodash"."4.16.6" = self.buildNodePackage {
+    name = "lodash-4.16.6";
+    version = "4.16.6";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/lodash/-/lodash-4.16.4.tgz";
-      name = "lodash-4.16.4.tgz";
-      sha1 = "01ce306b9bad1319f2a5528674f88297aeb70127";
+      url = "https://registry.npmjs.org/lodash/-/lodash-4.16.6.tgz";
+      name = "lodash-4.16.6.tgz";
+      sha1 = "d22c9ac660288f3843e16ba7d2b5d06cca27d777";
     };
     deps = {
     };
@@ -3366,9 +3346,9 @@
     cpu = [ ];
   };
   by-spec."lodash"."^4.14.0" =
-    self.by-version."lodash"."4.16.4";
+    self.by-version."lodash"."4.16.6";
   by-spec."lodash"."^4.3.0" =
-    self.by-version."lodash"."4.16.4";
+    self.by-version."lodash"."4.16.6";
   by-spec."lru-cache"."2" =
     self.by-version."lru-cache"."2.7.3";
   by-version."lru-cache"."2.7.3" = self.buildNodePackage {
@@ -5240,7 +5220,7 @@
       "ajv-4.8.2" = self.by-version."ajv"."4.8.2";
       "ajv-keywords-1.1.1" = self.by-version."ajv-keywords"."1.1.1";
       "chalk-1.1.3" = self.by-version."chalk"."1.1.3";
-      "lodash-4.16.4" = self.by-version."lodash"."4.16.4";
+      "lodash-4.16.6" = self.by-version."lodash"."4.16.6";
       "slice-ansi-0.0.4" = self.by-version."slice-ansi"."0.0.4";
       "string-width-2.0.0" = self.by-version."string-width"."2.0.0";
     };
@@ -5389,15 +5369,15 @@
     cpu = [ ];
   };
   by-spec."tryit"."^1.0.1" =
-    self.by-version."tryit"."1.0.2";
-  by-version."tryit"."1.0.2" = self.buildNodePackage {
-    name = "tryit-1.0.2";
-    version = "1.0.2";
+    self.by-version."tryit"."1.0.3";
+  by-version."tryit"."1.0.3" = self.buildNodePackage {
+    name = "tryit-1.0.3";
+    version = "1.0.3";
     bin = false;
     src = fetchurl {
-      url = "https://registry.npmjs.org/tryit/-/tryit-1.0.2.tgz";
-      name = "tryit-1.0.2.tgz";
-      sha1 = "c196b0073e6b1c595d93c9c830855b7acc32a453";
+      url = "https://registry.npmjs.org/tryit/-/tryit-1.0.3.tgz";
+      name = "tryit-1.0.3.tgz";
+      sha1 = "393be730a9446fd1ead6da59a014308f36c289cb";
     };
     deps = {
     };
