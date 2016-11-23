@@ -1,12 +1,15 @@
-const mqtt    = require('mqtt');
-const mkdirp  = require('mkdirp');
-const winston = require('winston');
-const uri     = require('urijs');
-const path    = require('path');
-const express = require('express');
+const mqtt          = require('mqtt');
+const mkdirp        = require('mkdirp');
+const winston       = require('winston');
+const uri           = require('urijs');
+const path          = require('path');
+const express       = require('express');
+const MqttTransport = require('winston-mqtt');
 
 const consts       = require('./support/constants');
 const TTSProcessor = require('./module/tts-processor');
+
+winston.add(MqttTransport, { name: 'mqtt-speak', topic: 'central-log', host: consts.mqttHost });
 
 const client  = mqtt.connect(consts.mqttHost);
 const app     = express();
