@@ -17,7 +17,7 @@ in rec {
     name = "mqtt-speak-0.0.1";
     src = [ tarball ];
     buildInputs = nodePackages.nativeDeps."mqtt-speak" or [];
-    deps = [ nodePackages.by-spec."mkdirp"."^0.5.1" nodePackages.by-spec."mqtt"."1.8.0" nodePackages.by-spec."request"."2.71.0" nodePackages.by-spec."winston"."2.2.0" nodePackages.by-spec."url-parse"."1.1.6" nodePackages.by-spec."fs-extra"."0.30.0" nodePackages.by-spec."express"."^4.13.3" nodePackages.by-spec."mocha"."^2.5.3" nodePackages.by-spec."rewire"."2.5.1" nodePackages.by-spec."valid-url"."1.0.9" nodePackages.by-spec."urijs"."1.16.1" nodePackages.by-spec."detox-node-service-auth-module"."git+ssh://git@github.com/dstil/detox-node-service-auth-module.git" ];
+    deps = [ nodePackages.by-spec."mkdirp"."^0.5.1" nodePackages.by-spec."mqtt"."1.8.0" nodePackages.by-spec."request"."2.71.0" nodePackages.by-spec."winston"."2.2.0" nodePackages.by-spec."url-parse"."1.1.6" nodePackages.by-spec."fs-extra"."0.30.0" nodePackages.by-spec."express"."^4.13.3" nodePackages.by-spec."mocha"."^2.5.3" nodePackages.by-spec."rewire"."2.5.1" nodePackages.by-spec."valid-url"."1.0.9" nodePackages.by-spec."urijs"."1.16.1" nodePackages.by-spec."detox-node-service-auth-module"."git+ssh://git@github.com/dstil/detox-node-service-auth-module.git" nodePackages.by-spec."winston-mqtt"."git+ssh://git@github.com/dstil/winston-mqtt.git" ];
     peerDependencies = [];
   };
   dev = build.override {
