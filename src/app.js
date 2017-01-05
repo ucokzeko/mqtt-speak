@@ -1,18 +1,23 @@
-const mqtt          = require('mqtt');
-const mkdirp        = require('mkdirp');
-const winston       = require('winston');
-const uri           = require('urijs');
-const path          = require('path');
-const express       = require('express');
-const MqttTransport = require('winston-mqtt');
+const mqtt            = require('mqtt');
+const mkdirp          = require('mkdirp');
+const winston         = require('winston');
+const uri             = require('urijs');
+const path            = require('path');
+const moment          = require('moment-timezone');
+const express         = require('express');
+const MqttTransport   = require('winston-mqtt');
+const ConfigManager   = require('serenity-sdk').ConfigManager;
 
 const consts       = require('./support/constants');
 const TTSProcessor = require('./module/tts-processor');
+const isMuteTime   = require('./module/mute-check.js').isMuteTime;
 
 winston.add(MqttTransport, { name: 'mqtt-speak', topic: 'central-log', host: consts.mqttHost });
+moment.tz.setDefault(process.env.TZ);
 
-const client  = mqtt.connect(consts.mqttHost);
-const app     = express();
+const client        = mqtt.connect(consts.mqttHost);
+const app           = express();
+const configManager = new ConfigManager();
 
 app.set('port', consts.ttsCacheServerPort);
 
@@ -40,30 +45,43 @@ client.on('connect', () => {
 
 client.on('message', (topic, rawMessage) => {
   const message = rawMessage.toString();
-  try {
-    const playTimeMilli = Number(new Date().getTime()) + consts.playDelay;
-    const playTime      = new Date(playTimeMilli).toISOString();
-    const toSpeak       = JSON.parse(message).message;
-    winston.info(`Message received: '${message}'`);
-    new TTSProcessor(toSpeak, consts.audioPath)
-    .then((filePath) => {
-      const fileName  = path.basename(filePath);
-      const audioUrl  = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
-      const toPublish = JSON.stringify({
-        url:      audioUrl,
-        name:     fileName,
-        time:     playTime,
-        location: ['kitchen', 'lounge']
-      });
-      client.publish(consts.playTopic, toPublish, consts.qos);
-      winston.info(`Published audio URL: ${audioUrl}\nTo be played at: ${playTime}`);
-    })
-    .catch((error) => {
-      winston.error(error);
-    });
-  } catch (e) {
-    winston.error(`Message failed. Probably invalid JSON. ${e}`);
+  winston.info(`Message received: '${message}'`);
+
+  const muteAt   = configManager.getConfig('silent-period').start;
+  const unmuteAt = configManager.getConfig('silent-period').end;
+  if (isMuteTime(moment(), muteAt, unmuteAt)) {
+    winston.info('Message muted.');
+    return;
   }
+
+  let toSpeak;
+  let playTimeMilli;
+  let playTime;
+
+  try {
+    toSpeak       = JSON.parse(message).message;
+    playTimeMilli = Number(new Date().getTime()) + consts.playDelay;
+    playTime      = new Date(playTimeMilli).toISOString();
+  } catch (e) {
+    winston.error(`Message attempt failed: ${e}`);
+  }
+
+  new TTSProcessor(toSpeak, consts.audioPath)
+  .then((filePath) => {
+    const fileName  = path.basename(filePath);
+    const audioUrl  = buildDownloadUrl(path.join(consts.audioURLPath, fileName));
+    const toPublish = JSON.stringify({
+      url:      audioUrl,
+      name:     fileName,
+      time:     playTime,
+      location: ['kitchen', 'lounge']
+    });
+    client.publish(consts.playTopic, toPublish, consts.qos);
+    winston.info(`Published audio URL: ${audioUrl}\nTo be played at: ${playTime}`);
+  })
+  .catch((error) => {
+    winston.error(error);
+  });
 });
 
 // Makes a url to a given served file path
