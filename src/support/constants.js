@@ -43,7 +43,6 @@ if (process.env.INTEGRATION_TESTING) {
   detoxCentralAddress = 'http://localhost:3001';
 }
 
-
 const speakTopic   = 'say/#';
 const playTopic    = 'play/all';
 const audioURLPath = '/audio';

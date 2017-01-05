@@ -9,9 +9,12 @@ in mkService {
   name = "mqtt-speak";
   dependsOn = [ mosquitto detox-api ];
   environment = {
-    SOX_COMMAND = "${sox.override { inherit lame; enableLame = true; }}/bin/sox";
-    SPEAK_AUDIO_PATH = "${user.home}/audio-files/";
-    PREFIX_TONE_FILE = "${user.home}/audio-files/notify.mp3";
+    APP_NAME            = "mqtt-speak";
+    SOX_COMMAND         = "${sox.override { inherit lame; enableLame = true; }}/bin/sox";
+    SPEAK_AUDIO_PATH    = "${user.home}/audio-files/";
+    PREFIX_TONE_FILE    = "${user.home}/audio-files/notify.mp3";
+    CONFIG_FILE_PATH    = "${user.home}/config.json";
+    DEFAULT_CONFIG_PATH = "${mqttSpeakDir}/default-config.json";
   };
 
   preStartRootScript = ''
