@@ -7,8 +7,15 @@ function isMuteTime(now, muteAt, unmuteAt) {
     return false;
   }
 
-  const start = moment(muteAt,   'HH:mm');
-  const end   = moment(unmuteAt, 'HH:mm');
+  const start = moment(now);
+  start.set('hours',   Number.parseInt(muteAt.split(':')[0], 10));
+  start.set('minutes', Number.parseInt(muteAt.split(':')[1], 10));
+  start.set('seconds', 0);
+
+  const end = moment(now);
+  end.set('hours',   Number.parseInt(unmuteAt.split(':')[0], 10));
+  end.set('minutes', Number.parseInt(unmuteAt.split(':')[1], 10));
+  end.set('seconds', 0);
 
   // if end is before start, push end to the next day.
   if (end.isBefore(start)) {
