@@ -27,7 +27,7 @@
     "url-parse": "1.1.6",
     "valid-url": "1.0.9",
     "winston": "2.2.0",
-    "winston-mqtt": "git+ssh://git@github.com/dstil/winston-mqtt.git"
+    "winston-mqtt": "git+ssh://git@github.com/dstil/winston-mqtt.git#df8dfd7"
   },
   "devDependencies": {
     "eslint": "^2.8.0",

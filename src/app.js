@@ -12,7 +12,7 @@ const consts       = require('./support/constants');
 const TTSProcessor = require('./module/tts-processor');
 const isMuteTime   = require('./module/mute-check.js').isMuteTime;
 
-winston.add(MqttTransport, { name: 'mqtt-speak', topic: 'central-log', host: consts.mqttHost });
+winston.add(MqttTransport, { name: 'mqtt-speak', host: consts.mqttHost });
 moment.tz.setDefault(process.env.TZ);
 
 const client        = mqtt.connect(consts.mqttHost);
