@@ -19,7 +19,11 @@ function isMuteTime(now, muteAt, unmuteAt) {
 
   // if end is before start, push end to the next day.
   if (end.isBefore(start)) {
-    end.add(1, 'day');
+    if (now.isBefore(end)) {
+      start.subtract(1, 'day');
+    } else {
+      end.add(1, 'day');
+    }
   }
 
   return (now.isAfter(start) && now.isBefore(end));
